@@ -1,0 +1,131 @@
+---
+title: "TidyVerse CREATE assignment: forcats vignette"
+author: "Naomi Buell"
+format: html
+editor: visual
+---
+
+## Introduction
+
+In this document, I create programming vignette of the **forcats** TidyVerse package. I take [Lana Del Rey's full discography from Kaggle](https://www.kaggle.com/datasets/madroscla/lana-del-rey-genius-discography-released?resource=download) to create an example demonstrating how to use the capabilities of the forcats TidyVerse package for working with factor variables. Factors are used to represent categorical data and with multiple levels.
+
+### Load forcats package
+
+Since forcats is part of the core tidyverse, you can load it with `library(tidyverse)` (or `library(forcats)` to load just forcats on its own). Note that you will need to install these packages before loading.
+
+```{r}
+#| label: load packages
+#| message: false
+
+# The easiest way to get forcats is to install and load the whole tidyverse:
+library(tidyverse)
+
+# Alternatively, just install and load forcats:
+library(forcats)
+```
+
+## Demo
+
+To begin, load example data for us to work with. All variable types are either character or double variables–no factors yet.
+
+```{r}
+#| label: import example data
+
+ldr_raw <-
+  read_csv(
+    "https://raw.githubusercontent.com/naomibuell/DATA607/main/ldr_discography_released.csv"
+  )
+
+head(ldr_raw)
+```
+
+### Creating factors
+
+Create factors with the `forcats::as_factor()` function. In the example below, change the variable `category`, which is the categorical classification of an album/song.
+
+```{r}
+#| label: assign as factor
+
+# Assign variable as factor:
+ldr_cats <- ldr_raw |>
+  mutate(category = as_factor(category))
+
+# Category variable is now <fctr> type:
+head(ldr_cats)
+```
+
+### Browsing Factors
+
+Browse factor levels with the `forcats::levels()`.
+
+```{r}
+#| label: get levels
+
+# Browse unique levels of `category` variable:
+levels(ldr_cats$category)
+```
+
+We see that there are `r length(levels(ldr_cats$category))` levels of the variable `category`. These levels are the titles of studio albums/major EPs, "Non-Album Songs" for promotional singles or songs for soundtracks, and "Other Artist Songs" for songs classified under different artist's names but either feature Lana or are written by Lana.
+
+Get counts of observations in each level in a tibble with `forcats::fct_count`.
+
+```{r}
+#| label: get level counts
+
+fct_count(ldr_cats$category)
+```
+
+Check if and where level(s) exist in data with `forcats::fct_match`. In this example we verify that her album "Born to Die" is included in the data set and then browse this subset of the data.
+
+```{r}
+#| label: check level
+
+# Check matches with "Born to Die"
+fct_match(ldr_cats$category, "Born to Die")
+
+# Browse "Born to Die" data
+ldr_cats[fct_match(ldr_cats$category, "Born to Die"),]
+```
+
+We verified that there are `r fct_match(ldr_cats$category, "Born to Die") |> sum()` songs from that album in this data (this is the length of the bonus track version).
+
+### Reordering levels
+
+Sort levels in by how frequently they appear in the data with `forcats::fct_infreq`.
+
+```{r}
+#| label: order levels
+levels_ordered <-
+  fct_infreq(ldr_cats$category, ordered = NA) |> levels()
+levels_ordered
+```
+
+Now we can see that most of the songs here are `r levels_ordered[1]` and the album she has with the shortest track list is `r levels_ordered[length(levels_ordered)]`. The following graph confirms this. It is easy to make a bar plot of (ordered) frequencies by factor level:
+
+```{r}
+#| label: plot frequencies
+ggplot(ldr_cats, aes(y = fct_infreq(category))) +
+  geom_bar()
+```
+
+### Modifying levels
+
+Use `forcats::fct_lump()` to lump together infrequent levels into an “other” category, specifying the number of levels we want to keep for our factor. In the example below, I narrow the categories down to just the top 5:
+
+```{r}
+#| label: lump levels
+
+# Lump levels other than the largest 5 categories
+ldr_top5 <- ldr_cats |> 
+  mutate(category = fct_lump(category, n = 5))
+
+# Browse top 5 + other category counts in table
+top5_counts <- fct_count(ldr_top5$category)
+top5_counts
+```
+
+Now we see Lana's top 5 longest albums (in terms of track list) above, and there are `r top5_counts[top5_counts$f == "Other", 2]` songs under "other."
+
+## Conclusion
+
+This vignette is part of a collaboration project to build out a book of examples on how to use TidyVerse functions in the our class [TidyVerse GitHub repository](https://github.com/pkowalchuk/SPRING2024TIDYVERSE). View the README.md file to see a description of the commit and a link to the markdown containing this example.
