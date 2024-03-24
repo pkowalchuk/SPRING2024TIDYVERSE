@@ -1,0 +1,103 @@
+---
+title: "Tidyverse create - SemyonToybis"
+author: "Semyon Toybis"
+date: "2024-03-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose - TidyVerse Create
+
+The purpose of this assignment is to collaborate via GitHub on a coding project that uses the TidyVerse library. We are tasked with creating an example. For this example, we are to find a data set and then create a programming sample "vignette" that uses the capabilities of the TidyVerse package.
+
+Later on, we will be tasked with extending a classmates sample vignette.
+
+## Data set
+
+For my data set, I have chosen the airlines review data set from Kaggle:
+
+<https://www.kaggle.com/datasets/sujalsuthar/airlines-reviews?select=airlines_reviews.csv>
+
+I have saved the csv file in my personal GitHub repo to allow for code recreation and to not spam the class Repo with data files.
+
+Below I load the necessary packages for this assignment
+
+```{r, message = FALSE}
+library(tidyverse)
+library(readr)
+
+```
+
+## Reading in the data
+
+Below I read in the data from my GitHub repo
+
+```{r}
+fileURL = 'https://raw.githubusercontent.com/stoybis/DATA607Repo/main/airlines_reviews.csv'
+
+flightReviewData = read.csv(url(fileURL), header = TRUE)
+
+head(flightReviewData)
+
+glimpse(flightReviewData)
+```
+
+## Using the stringr package from the TidyVerse and the mutate function
+
+The data file is in a tidy format. Each observation is a review of a flight and each column is a variable that contains information about the flight.
+
+One of the variables is the route of the flight. This variable has the departure city, arrival city, and layover city (or cities) if there were layovers.
+
+We can use the stringr package and the mutate function to create new columns for departure_city, arrival_city, and layover_city. This can allow for analysis of flights based on departure or arrival location.
+
+## Extracting the departure city
+
+Below we use Regex to extract all characters that end in the pattern of a space followed by the word "to". This will capture the departure city.
+
+Once we have that string extracted, we remove the pattern "\\\\s+to" so that only the departure city is left.
+
+```{r}
+flightReviewData <- flightReviewData |> mutate(departue_city = str_extract(flightReviewData$Route, '^(.*?)\\s+to'))
+
+flightReviewData$departue_city <- str_remove(flightReviewData$departue_city, '\\s+to')
+```
+
+## Extracting the arrival and layover cities
+
+We insert a column that has the arrival city be extracting the pattern that starts with "to" followed by a space and then ends with any characters.
+
+This results in extracting the arrival city but also the layover city.
+
+From this arrival column, we extract the pattern that starts via the word "via" followed by a space and ends with characters. We place this in the layover city column and then remove the pattern "via\\\\s". It should be noted that there are certain routes where there are two layovers. In this case, both are contained in the layover_cities column
+
+```{r}
+
+flightReviewData <- flightReviewData |> mutate(arrival_city = str_extract(flightReviewData$Route, 'to+\\s(.*?)$'))
+
+flightReviewData <- flightReviewData |> mutate(layover_cities = str_extract(flightReviewData$arrival_city, 'via+\\s(.*?)$'))
+
+flightReviewData$layover_cities <- str_remove(flightReviewData$layover_cities, 'via\\s')
+
+```
+
+We go back to cleaning up the arrival_city column.
+
+First, we replace the pattern that starts with the word "via" followed by a space, followed by all characters after it. This removes the layover cities and leaves the arrival city as well as the pattern "to" followed by a space.
+
+Next, we remove the pattern "to" followed by a space" to leave the arrival city.
+
+```{r}
+flightReviewData$arrival_city <- str_replace(flightReviewData$arrival_city, 'via+\\s(.*?)$','')
+
+flightReviewData$arrival_city <- str_remove(flightReviewData$arrival_city, 'to+\\s')
+
+head(flightReviewData, n=10)
+glimpse(flightReviewData)
+```
+
+## Further analysis
+
+Some potential analysis includes seeing which airlines have the highest overall rating, seeing if the average rating is higher for direct flights or layover flights, examining if certain months have higher average ratings, examining if certain types of travelers give higher ratings and whether that holds for direct or non-direct flights, etc.
