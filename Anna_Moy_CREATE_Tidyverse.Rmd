@@ -1,0 +1,151 @@
+---
+title: "Tidyverse"
+author: "Anna Moy"
+date: "2024-03-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment
+Assignment
+Create an Example. Using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with your selected dataset. (25 points)
+
+Later, you’ll be asked to extend an existing vignette. Using one of your classmate’s examples (as created above), you’ll then extend his or her example with additional annotated code. (15 points)
+
+You should clone the provided repository. Once you have code to submit, you should make a pull request on the shared repository. You should also update the README.md file with your example.
+
+After you’ve created your vignette, please submit your GitHub handle name in the submission link provided below. This will let your instructor know that your work is ready to be peer-graded.
+
+You should complete your submission on the schedule stated in the course syllabus.
+
+# Kaggle Dataset
+
+The Kaggle dataset I selected is [NutriKit: Your Ultimate Food Database](https://www.kaggle.com/datasets/lakshaysharma07/diet-dataset-calorie) which provides nutrition information about differe food items categorized into fruits, grains, beverages, vegetables, and etc.
+
+# Vignette for dyplr
+The dyplyr package allows users to be able to manipulate data easily and efficiently. With the useof dyplr and piping it allows users to easily read the codes and understand the changes that are done to the dataset.
+
+The dyplyr package is part of the tidyverse package therefore I can load the tidyverse package since it allows me to access other packages such as dplyr, ggplot2, tidyr, readr, purr, tibble, stringr, and forcats.
+
+## Load tidyverse library
+```{r load-library, message = FALSE}
+library(tidyverse)
+```
+
+## Load in the csv file from Kaggle
+To load the data we utilized the readr package in the dataset to read the csv file from Github.
+
+We use the function read_csv(“file_name.csv”) in order to read the csv.
+
+read_csv() - reads a csv file
+
+```{r calories}
+calories <- read_csv("https://raw.githubusercontent.com/AnnaMoy/Data-607/main/Calorie_value.csv")
+calories
+```
+
+## Group_by and Summarize Function
+The group_by is a grouping of the same category together and the summarize function will summarize the data for average, median, min, max and etc..
+
+group_by() - grouping data that are the same
+
+```{r group_by}
+# Finding out the average Calories for each Categories
+avg_calories <- calories %>%
+  group_by(Category) %>%
+  summarize(mean_calories = mean(Calories))
+
+avg_calories
+```
+
+## Manipulate
+Dplyr allows us to manipulate the data and extract certain information for further analysis.
+
+filter() - filter out the information you want in a particular observation
+
+distinct() - finding the unique values without duplicate values
+
+slice() - looking at only certain rows in the data
+
+slice_sample() - takes a random sample of the data based on the n value
+
+slice_min() and slice_max() - find the lowest number and the highest value in the column
+
+arrange() - arrange the data from highest to lowest value. desc() is added to do the reverse order
+
+pull() - pulls out the column values which could be characters or numerical
+
+summarize() - summary of data such as mean, median, min, max, and etc.
+
+```{r manipulate}
+# Filter for food items that are Avocado
+avocado_calories <- calories %>%
+  filter(`food items` == "Avocado")
+
+avocado_calories
+```
+
+```{r distinct}
+# Finding the distinct avg serving size because we do not want duplicate information on the serving size and arrange from highest to lowest
+distinct_serving <- calories %>%
+  distinct(`Avg Serving Size`) %>%
+  arrange(desc(`Avg Serving Size`))
+
+distinct_serving
+```
+
+```{r slice}
+# Using the slice function we can view the information from row 5 to 10 only.
+slice <- calories %>%
+  slice(5:10)
+
+slice
+```
+
+```{r slice_sample}
+# Using slice_sample which takes 5 random sample of the data
+calories %>%
+  slice_sample(n = 5)
+```
+
+```{r lowest-calories}
+# Finding the lowest Calories
+calories %>%
+  slice_min(Calories)
+```
+
+```{r max-calories}
+# Finding the maximum Calories and pull out the number values only in Calories
+calories %>%
+  slice_max(Calories) %>%
+  pull(Calories)
+```
+  
+## Vingette for ggplot2
+
+ggplot2 package allows for users to graph information for their data and making it visually appealing to their audience.
+
+ggplot() - plots the information on the dataset and aes is to add in which columns to appear. Fill is used to add color to the column you want
+
+geom_bar() - plots a bar chart
+
+coord_flip() - flips the x-axis to the y-axis and the y-axis to x-axis
+
+ylab() - Adds a label to the y-axis
+
+xlab() - Adds a label to the x-axis
+
+ggtitle() - Adds a title to the plot
+
+```{r ggplot}
+# Below is a bar chart is the average calories for each Category. 
+ggplot(avg_calories, aes(Category, mean_calories, fill = Category)) +
+  geom_bar(stat ="identity") +
+  coord_flip() +
+  ylab("Average Calories") +
+  xlab("Each Category") +
+  ggtitle("Average Calories For Each Category")
+```
