@@ -4,3 +4,5 @@
 
 
 - Anna Moy - I created a Vignette for Dplyr -  https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Anna_Moy_CREATE_Tidyverse.Rmd
+
+-Semyon Toybis - MY TidyVerse Create submission uses the mutate function and functions from the Stringr package in Tidyverse to extract string data from a dataset of airline reviews - https://github.com/stoybis/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd
