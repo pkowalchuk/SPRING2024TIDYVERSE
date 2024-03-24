@@ -10,8 +10,4 @@
 
     <https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/Recipe_tidyr_jsonlite_Fox.qmd>
 
--   Naomi Buell - I created a Vignette for the **forcats** package.
-
-    -   rPubs: <https://rpubs.com/nbuell/1165119>
-
-    -   GitHub: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.qmd>
+-   Naomi Buell - I created a Vignette for the **forcats** package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.qmd>
