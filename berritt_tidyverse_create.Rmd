@@ -1,0 +1,62 @@
+---
+title: "tidyverse_create_assignment"
+output: html_document
+author: 'Will Berritt'
+date: "2024-03-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Objective: Choose a dataset from fivethiryeight to demonstrate how the TidyVerse packages can be used to manipulate data. I chose a dataset that measures democratic and republican polling averages since middle of 2018.
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+
+# Define file path
+file_path <- '/Users/williamberritt/Downloads/congress-generic-ballot/generic_ballot_averages.csv'
+
+# Read data from CSV file
+political_df <- read.csv(file_path)
+
+# Subset data for Republicans and Democrats
+republicans <- subset(political_df, political_df$candidate == 'Republicans')
+democrats <- subset(political_df, political_df$candidate == 'Democrats')
+
+# Check dimensions of Democrats and Republicans data
+dim(democrats)
+dim(republicans)
+
+# Count distinct dates for Democrats and Republicans
+n_distinct(democrats$date)
+n_distinct(republicans$date)
+
+# Left join Republicans and Democrats data
+rep_dem <- left_join(republicans, democrats, by = c('date', 'election', 'cycle'))
+
+# Rename columns for clarity
+names(rep_dem) <- c("republicans", "r_ballot_average_estimate", "r_ballot_lo_estimate", "r_ballot_hi_estimate", "date", "election_date", "cycle", "democrats", "d_ballot_average_estimate", "d_ballot_lo_estimate", "d_ballot_hi_estimate")
+
+# Select relevant columns for analysis
+clean_df <- rep_dem[c("r_ballot_average_estimate", "d_ballot_average_estimate", "r_ballot_lo_estimate", "d_ballot_lo_estimate", "r_ballot_hi_estimate", "d_ballot_hi_estimate", "date", "election_date", "cycle")]
+head(clean_df, 10)
+
+# Convert date columns to Date type
+clean_df$date <- as.Date(clean_df$date)
+clean_df$election_date <- as.Date(clean_df$election_date)
+
+# Plot Republican and Democrat average estimates over time with election date annotations
+ggplot(clean_df, aes(x = date)) +
+  geom_line(aes(y = r_ballot_average_estimate, color = "Republican")) +
+  geom_line(aes(y = d_ballot_average_estimate, color = "Democrat")) +
+  geom_vline(aes(xintercept = as.numeric(election_date)), linetype = "dashed", color = "red") +
+  labs(title = "Average Estimates Over Time",
+       x = "Date",
+       y = "Average Estimate",
+       color = "Party") +
+  theme_minimal()
+```
+
+# Conclusion: Using the dplyr and ggplot packages from TidyVerse, I was able to create a cleaner dataframe that's better prepared for analysis. I was also able to visualize the polling averages over time.
