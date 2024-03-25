@@ -1,0 +1,32 @@
+drink_type,price_small,price_medium,price_large,simple,double
+frappucino,5,5.7,6.4,,
+iced chocolate,5,5.7,6.4,,
+iced chai latte,5,5.7,6.4,,
+milkshake (syrup),4.6,5.3,6,,
+milkshake (natural fruit extract),4.6,5.3,6,,
+cold brew latte,4.5,5.2,5.9,,
+iced coco matcha,5,5.7,6.4,,
+company ice tea passion fruit and citrus,3.5,4.2,4.9,,
+company ice tea raspberry and elderflower,3.5,4.2,4.9,,
+company ice tea peach,3.5,4.2,4.9,,
+special company drink,3.8,4.5,5.2,,
+smoothie - Kiwi Banana Mango Apple,4.9,5.6,6.3,,
+smoothie - Strawberry Blueberry Blackcurrant Mango,4.9,5.6,6.3,,
+smoothie - Passion fruit Guava Pineapple Aloe vera,4.9,5.6,6.3,,
+orange juice,3.9,4.6,5.3,,
+cappucino,4.1,4.8,5.5,,
+latte,4,4.7,5.5,,
+special company brand latte,5.4,6.1,6.8,,
+mocha,4.9,5.6,6.3,,
+chai latte,4.7,5.4,6.1,,
+coco matcha,5,5.7,6.4,,
+hot chocolate,4,4.7,5.4,,
+hot white chocolate,4.2,4.9,5.6,,
+viennese coffee,4.7,5.4,6.1,,
+espresso,,,,1.8,2.5
+macchiato,,,,2.1,2.8
+con panna,,,,2.5,3.2
+ristretto,,,,1.8,2.5
+lungo,,,,1.9,
+filter coffee,2.9,3.6,4.3,,
+tea/herbal teas,3.1,3.4,3.8,,
