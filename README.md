@@ -15,3 +15,4 @@
 -   Semyon Toybis - I created a vignette that uses the mutate function and stringr package from the TIDYVERSE to extract data from airline flight reviews, allowing for further analysis:
   https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd
 
+- Ursula Podosenin -  I created a vignette that focuses on the filter, group and mutate functions: https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyVerse_Part_One.Rmd
