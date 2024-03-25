@@ -16,3 +16,5 @@
   https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd
 
 - Ursula Podosenin -  I created a vignette that focuses on the filter, group and mutate functions: https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyVerse_Part_One.Rmd
+
+- Kaylie Evans - Using the ggplot2 package, the following vignette was created: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
