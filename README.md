@@ -11,3 +11,7 @@
     <https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/Recipe_tidyr_jsonlite_Fox.qmd>
 
 -   Naomi Buell - I created a Vignette for the **forcats** package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.qmd>
+
+-   Semyon Toybis - I created a vignette that uses the mutate function and stringr package from the TIDYVERSE to extract data from airline flight reviews, allowing for further analysis:
+-   https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd
+
