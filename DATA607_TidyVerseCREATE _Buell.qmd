@@ -89,7 +89,7 @@ ldr_cats[fct_match(ldr_cats$category, "Born to Die"),]
 
 We verified that there are `r fct_match(ldr_cats$category, "Born to Die") |> sum()` songs from that album in this data (this is the length of the bonus track version).
 
-### Reordering levels (plus a graph)
+### Reordering levels
 
 Sort levels in by how frequently they appear in the data with `forcats::fct_infreq`.
 
@@ -128,4 +128,4 @@ Now we see Lana's top 5 longest albums (in terms of track list) above, and there
 
 ## Conclusion
 
-This vignette is part of a collaboration project to build out a book of examples on how to use TidyVerse functions in the our class [TidyVerse GitHub repository](https://github.com/pkowalchuk/SPRING2024TIDYVERSE). View the README.md file to see the commit to this code, a description of the commit, and a link to the markdown containing this example.
+This vignette is part of a collaboration project to build out a book of examples on how to use TidyVerse functions in the our class [TidyVerse GitHub repository](https://github.com/pkowalchuk/SPRING2024TIDYVERSE). View the README.md file to see a description of the commit and a link to the markdown containing this example.

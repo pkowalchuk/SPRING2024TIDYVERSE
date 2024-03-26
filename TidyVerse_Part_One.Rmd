@@ -1,0 +1,78 @@
+---
+title: "TidyVersen_Part_One"
+author: "Ursula Podosenin"
+date: "2024-03-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+# Loading the packages used in this file
+
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+
+```{r}
+
+# Obtaining the url file, converting it into a data frame, and getting an overview of the table 
+url<- "https://raw.githubusercontent.com/ursulapodosenin/DAT-607/main/osteoporosis.csv"
+
+raw_data<-read.csv(url(url))
+raw_data<- data.frame(raw_data)
+dplyr::glimpse(raw_data)
+sum(is.na(raw_data))
+```
+
+```{r}
+# Adding a column to raw data that pulls out people over 50 with osteoporosis and potential risk factors
+raw_data<- raw_data |>
+  mutate(Osteoporosis.And.Over.50= Age>49 & Osteoporosis== "1")
+
+raw_data<- raw_data |> 
+  mutate(Risk_Factors = ifelse(raw_data$Calcium.Intake == "Low" | Family.History == "Yes" | Medical.Conditions != "None" | Prior.Fractures== "Yes" , "yes", "no"))
+
+# Filtering the number of people with Osteoporosis by ethnicity, activity level and hormonal changes
+raw_data |>
+  group_by(Race.Ethnicity)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+raw_data |>
+  group_by(Physical.Activity)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+raw_data |>
+  group_by(Gender, Hormonal.Changes)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+# Filetring by some general conditions to see if there are any suggestive variables that may be linked to Osteoporosis
+raw_data |> 
+  filter(Age>49 & Hormonal.Changes== "Normal" & Family.History=="No" & Body.Weight== "Normal" & Calcium.Intake== "Adequate", Osteoporosis==1)
+
+raw_data |> 
+  filter(Age>49 & Hormonal.Changes== "Normal" & Family.History=="No" & Body.Weight== "Normal" & Calcium.Intake== "Adequate", Osteoporosis==0)
+
+```
+
+```{r}
+
+# Looking at the number of people with medical conditions and those on medication
+
+ggplot(data= raw_data, aes(x= Medical.Conditions))+
+  geom_bar(
+  fill= "blue")+
+  theme_bw()
+
+ggplot(data= raw_data, aes(x= Medications))+
+  geom_bar(
+  fill= "green")+
+  theme_bw()
+
+```
+

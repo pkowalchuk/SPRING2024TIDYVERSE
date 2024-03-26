@@ -1,0 +1,77 @@
+---
+title: "Recipe_jsonlite_tidyr_Fox"
+author: "Amanda Fox"
+date: 3/24/2024
+format: html
+---
+
+
+### Introduction
+The New York Times provides ten public APIs to provide easy access to a tremendous amount of data for non-commercial developers as an extension of their mission in journalism (https://developer.nytimes.com/faq, accessed 3/24/2024). 
+
+In an earlier exercise, I used the Most Popular API to pull the top 20 most-viewed articles, and I would like to use this data for analysis and machine learning to trend and possibly predict movement by keyword, section, author, season, and more. 
+
+To do this, a repeatable process is required in order to aggregate many weeks of "top 20" articles into a database. I developed the below script to extract, preprocess, and export this data as .csv files, including transformations to parse keywords and assign the most-viewed position to each article every week for trending. The URI is preserved as the unique identifier in order to link to additional information in the future if needed: the article search API can be leveraged in this case.
+
+Note that the process below is designed to be repeatable and can be customized by changing the API key and (optionally) the number of days. It can also be edited to pull the most shared or most emailed articles.
+
+
+### Process Overview: 
+This script uses jsonlite and tidyr functions to automate a process of extracting and preprocessing weekly snapshots of data for aggregation in a database to support analysis and machine learning.
+  
+First, the script accesses the Most Popular API to extract a dataset of the 20 most-viewed articles of the last seven along with 25 data elements such as dates, title, author, section, and keywords. It performs several cleaning and transformations and exports the dataframe as a .csv file with today's date appended for later ingestion into a database.
+
+Two packages are used to accomplish these tasks efficiently: 
+
+### Package 1: jsonlite
+The jsonlite package includes the fromJSON function which converts json files into R, including the option to flatten the data into a table format in a single step. 
+
+To use this function, we simply name the data source (here it's our URL) and the optional flatten = TRUE argument to convert it to the table structure we need to pipe into our data frame.
+
+### Package 2: tidyr 
+The tidyr package includes several experimental "separate" functions, including the "separate_longer_delim" function. We use this function below to accomplish two cleaning steps in one line of code: parsing a string of keywords using the ";" delimiter and pivoting the table longer. 
+
+This long-tidy format will be used in the database to analyze articles by keyword to understand what types of articles are most viewed, how long they remain on the list, etc.
+
+To use this function, we name the dataframe, the column to parse, and the delimiter. Note that in the case of empty values in this column, the row will not be included in the output: the fixed-width function separate_longer_position has an optional "keep_empty = TRUE" argument, but in the case of a delimited field, that is not available. A check should be done to ensure that 20 articles are present for each week in the final table.
+
+
+``` {r nyt_viewed}
+library(tidyverse)
+library(jsonlite)
+library(dplyr)
+
+# call api and create dataframe "df_mostviewed_raw" with articles most viewed in past seven days 
+
+
+nyturl <- "https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json?api-key=jnf9jCrYLAyPORPG8zeeDNBhc0rbvNbu" 
+
+df_mostviewed_raw <- fromJSON(nyturl,flatten = TRUE) %>% 
+  data.frame()
+
+# remove unneeded columns and rename
+
+df_mostviewed_raw <- df_mostviewed_raw %>% 
+  mutate(pos_num = 1:nrow(df_mostviewed_raw))
+
+df_mostviewed_working <- df_mostviewed_raw %>% 
+  select(pos_num = pos_num,
+         URI = results.uri,
+         URL = results.url,
+         pub_date = results.published_date,
+         update_date = results.updated,
+         section = results.section,
+         subsection = results.subsection,
+         byline = results.byline,
+         type = results.type,
+         keywords = results.adx_keywords)
+
+# use dplyr separate_longer to parse keywords and pivot longer
+df_mostviewed_export <- df_mostviewed_working %>% 
+  separate_longer_delim(keywords, delim = ';') 
+
+# export to working directory as csv with today's date
+filename = paste0('nyt_mostviewed_', Sys.Date(), '.csv')
+write.csv(df_mostviewed_export,filename, row.names=FALSE)
+
+```
