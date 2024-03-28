@@ -1,0 +1,25 @@
+---
+title: "Tidyverse CREATE"
+author: "Atta Boateng"
+date: "03-14-2024"
+output: 
+  html_document:
+    figure_caption: yes
+
+---
+
+Using the data of stock data, I am going to demonstrate some of the capabilities of the tidyverse package. I start by first using the ggplot library to plot the opening prices of the New York Stock Exchange, noted by the symbol (NYA).
+
+```{r echo=TRUE, results='asis'}
+library(tidyverse)
+library(openintro)
+
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",");
+dd <- dd %>% filter(Index == "NYA" );
+
+ggplot(data = dd, aes(x=as.Date(dd$Date) , y=as.numeric(dd$Open))) + geom_line()+ labs(x="Date", y="Opening Price")
+
+
+```
+
+The ggplot function provides us with various graph options for our dataset. The function has a 'data' parameter and 'mapping' parameter. Additionally, witht the '+' operators, one the include the type of graph they wish to plot.

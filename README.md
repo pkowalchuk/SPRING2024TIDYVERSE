@@ -21,4 +21,10 @@
 
 - Will Berritt - I created a Vignette for dplyr and ggplot2 packages: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/berritt_tidyverse_create.Rmd>
 
+
 - Puja Roy - I created a Vignette for readr, dplyr and ggplot2 packages: <https://github.com/pujaroy280/SPRING2024TIDYVERSE/blob/main/Puja_Roy_Tidyverse_CREATE_assignment.Rmd>
+
+- Atta Boateng - I did a vigette for ggplot: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Atta_Boateng_Data_607_Tidyverse.rmd>
+
+- Natalie Kalukeerthie - I created a vignette for the ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Data_607_tidyverse_create_natalie_kalukeerthie.Rmd>
+
