@@ -28,3 +28,5 @@
 
 - Natalie Kalukeerthie - I created a vignette for the ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Data_607_tidyverse_create_natalie_kalukeerthie.Rmd>
 
+- Bishoy Sokkar - I created a vignette for the ggplot2 package:
+- 
