@@ -30,3 +30,5 @@
 
 - Andrianina David Raharijao - I created a vignette for the dyplir and ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Tiddyverse_assignment_David.Rmd>
 
+-Keith DeNivo - *inadvertently* also created a vignette for forcats. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Keith_DeNivo_tidyverse_assignment.Rmd> using this dataset <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/cardekho.csv>  factors used were the number of car owners.
+
