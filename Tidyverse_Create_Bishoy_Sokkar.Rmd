@@ -1,0 +1,54 @@
+---
+title: "Tidyverse Create assignment"
+author: "Bishoy Sokkar"
+date: "2024-03-29"
+output: html_document
+---
+
+## Introduction
+
+To Tidyverse The Tidyverse packages has a collection of tools that work together to make it easier for data scientist to clean and analyse data. One of the most important tools within the tidyverse package is ggplot2, which is a powerful and flexible tool for creating visualizations in R.
+
+This document will demonestrate some of ggplot capabilities to create visualization using the "Data science salaries" dataset found [here](https://www.kaggle.com/datasets/saurabhbadole/latest-data-science-job-salaries-2024?resource=download).
+
+
+The following code will pull the dataset from the stored github link. 
+
+```{r}
+library(tidyverse)
+library(scales)
+salaries <- read.csv("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/DataScience_salaries_2024.csv")
+```
+
+## ggplot2
+
+ggplot can be used to visualize trends, but can also give a quick glimpse of the data distribution. for example we can create a histogram to visualize the distribution of data scientist salaries in USD. 
+
+The following code we are using ggplot function to create a histogram. We fist select the object "salary_in_usd". we then specify that histogram layer of the plot and add the specified bin width and fill bars with color. Then we set the axis length to the frequency this salaried is mentioned in the data set. 
+
+```{r}
+ggplot(data = salaries, aes(x = salary_in_usd)) +
+  geom_histogram(binwidth = 500, fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Data Science Salaries in 2024",
+       x = "Salary (USD)",
+       y = "Frequency")
+
+```
+
+We can also breakdown a variable to see how does it affect another. Below we look at the salaries per employment type. i.e. Full time, Part time, contract, etc. 
+
+In the following code, using the ggplot function, we select the data frame, specify the x-axis and y-axis variables and fill the color of bars that corresponds to each variable. 
+we then add a bar layer to the plot, using the mean of the "salary_in_usd" variable. From there we can add finish touchs to name the graph axis to be able to identify and to add text visualization and the way data is presented on the graph.  
+
+```{r}
+ggplot(data = salaries, aes(x = employment_type, y = salary, fill = employment_type)) +
+  geom_bar(stat = "summary", fun = "mean") +
+  labs(title = "Average Data Science Salaries in 2024 by employment type",
+       x = "Employment Type",
+       y = "Average Salary (USD)") +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1)) +
+  scale_fill_brewer(palette = "Paired")+
+  coord_flip()
+```
+
+The above were a few capabilities that ggplot2 contains, please feel free to add more contributions to the work above.
