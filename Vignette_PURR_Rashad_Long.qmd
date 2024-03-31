@@ -1,5 +1,5 @@
 ---
-title: "Vignette for Purr"
+title: "Vignette for Purrr"
 author: "Rashad Long"
 format: html  
 editor: visual

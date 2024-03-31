@@ -12,23 +12,22 @@
 
 -   Naomi Buell - I created a Vignette for the **forcats** package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.qmd>
 
--   Semyon Toybis - I created a vignette that uses the mutate function and stringr package from the TIDYVERSE to extract data from airline flight reviews, allowing for further analysis:
-  https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd
+-   Semyon Toybis - I created a vignette that uses the mutate function and stringr package from the TIDYVERSE to extract data from airline flight reviews, allowing for further analysis: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd>
 
-- Ursula Podosenin -  I created a vignette that focuses on the filter, group and mutate functions: https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyVerse_Part_One.Rmd
+-   Ursula Podosenin - I created a vignette that focuses on the filter, group and mutate functions: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyVerse_Part_One.Rmd>
 
-- Kaylie Evans - Using the ggplot2 package, the following vignette was created: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
+-   Kaylie Evans - Using the ggplot2 package, the following vignette was created: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
 
-- Will Berritt - I created a Vignette for dplyr and ggplot2 packages: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/berritt_tidyverse_create.Rmd>
+-   Will Berritt - I created a Vignette for dplyr and ggplot2 packages: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/berritt_tidyverse_create.Rmd>
 
+-   Puja Roy - I created a Vignette for readr, dplyr and ggplot2 packages: <https://github.com/pujaroy280/SPRING2024TIDYVERSE/blob/main/Puja_Roy_Tidyverse_CREATE_assignment.Rmd>
 
-- Puja Roy - I created a Vignette for readr, dplyr and ggplot2 packages: <https://github.com/pujaroy280/SPRING2024TIDYVERSE/blob/main/Puja_Roy_Tidyverse_CREATE_assignment.Rmd>
+-   Atta Boateng - I did a vigette for ggplot: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Atta_Boateng_Data_607_Tidyverse.rmd>
 
-- Atta Boateng - I did a vigette for ggplot: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Atta_Boateng_Data_607_Tidyverse.rmd>
+-   Natalie Kalukeerthie - I created a vignette for the ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Data_607_tidyverse_create_natalie_kalukeerthie.Rmd>
 
-- Natalie Kalukeerthie - I created a vignette for the ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Data_607_tidyverse_create_natalie_kalukeerthie.Rmd>
+-   Andrianina David Raharijao - I created a vignette for the dyplir and ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Tiddyverse_assignment_David.Rmd>
 
-- Andrianina David Raharijao - I created a vignette for the dyplir and ggplot2 package: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Tiddyverse_assignment_David.Rmd>
+-   Keith DeNivo - *inadvertently* also created a vignette for forcats. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Keith_DeNivo_tidyverse_assignment.Rmd> using this dataset <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/cardekho.csv> factors used were the number of car owners.
 
--Keith DeNivo - *inadvertently* also created a vignette for forcats. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Keith_DeNivo_tidyverse_assignment.Rmd> using this dataset <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/cardekho.csv>  factors used were the number of car owners.
-
+-   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd>
