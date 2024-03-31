@@ -1,0 +1,93 @@
+---
+title: "Vignette for Purr"
+author: "Rashad Long"
+format: html  
+editor: visual
+---
+
+## Introduction
+
+The `purrr` package provides functions that eliminate the need for many common for loops. They are more consistent and thus easier to learn than many of the alternative functions in the base R package. It allows you to generalize a solution to every element in a list. It also allows you get lots of small pieces and compose them together with the pipe.
+
+```{r}
+#| warning: FALSE
+
+# Load the purr package along with other tidyverse packages
+if(!require("tidyverse")) {install.packages("tidyverse"); library("tidyverse")}
+
+
+```
+
+## Map Functions
+
+The `purr` package provides functions that allows you to loop over a vector, do something to each element, and save the results
+
+-   `map()` makes a list.
+
+-   `map_lgl()` makes a logical vector.
+
+-   `map_int()` makes an integer vector.
+
+-   `map_dbl()` makes a double vector.
+
+-   `map_chr()` makes a character vector.
+
+The map functions make it easier to write and to read than for loops.
+
+We will import a dataset from Kaggle that contains information about NFL passing statistics from players since 2001.
+
+```{r}
+
+# Lets import the passing_cleaned csv
+passing_stats <- read.csv("passing_cleaned.csv")
+passing_stats <- as_tibble(passing_stats)
+
+# Lets extract the variables Age, G, Yds, TD, Cmp, Int, Rate
+passing_stats <- passing_stats |> 
+  select(Age, G, Yds, TD, Cmp, Int, Rate) |> 
+  arrange(desc(Yds))
+
+passing_stats
+
+```
+
+Imagine if we wanted to compute the mean, median and sd for every column. We can use the map function to do this. Since they will generate doubles we need to us `map_dbl()`.
+
+```{r}
+
+# Compute mean for every column
+passing_stats_mean <- passing_stats |> 
+  map_dbl(mean, na.rm = TRUE)
+
+# Compute median for every column
+passing_stats_median <- passing_stats |> 
+  map_dbl(median, na.rm = TRUE)
+
+# Compute sd for every column
+passing_stats_sd <- passing_stats |>
+  map_dbl(sd, na.rm = TRUE)
+
+passing_stats_mean
+passing_stats_median
+passing_stats_sd
+
+```
+
+As you can see the map function allowed us to apply some solution to an entire data-frame in one command!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
