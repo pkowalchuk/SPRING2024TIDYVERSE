@@ -32,5 +32,6 @@
 
 -   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd> <br />
 
-**Chhiring Lama**
-- I have pushed a .jpg and .csv file for ML presentation
+**Chhiring Lama** - < https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.Rmd > 
+- Chhiring Lama - I have pushed a .jpg and .csv file for ML presentation. <br />
+- Chhiring Lama - Added two code blocks on Naomi Buell's Tideverse CREATE Assignment; commited and pushed to remote repository. 
