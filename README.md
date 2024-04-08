@@ -30,4 +30,7 @@
 
 -   Keith DeNivo - *inadvertently* also created a vignette for forcats. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Keith_DeNivo_tidyverse_assignment.Rmd> using this dataset <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/cardekho.csv> factors used were the number of car owners.
 
--   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd>
+-   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd> <br />
+
+**Chhiring Lama**
+- I have pushed a .jpg and .csv file for ML presentation
