@@ -1,0 +1,76 @@
+---
+title: "TIDYVERSE Create Lama"
+author: "Chhiring Lama"
+date: "2024-04-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction:
+
+This analysis employs the tidyverse package in R to conduct demographic analysis on the NYPD dataset. The dataset comprises information on criminal incidents, including demographic details of perpetrators and victims. Our aim is to utilize tidyverse functionalities to explore demographic trends, focusing on age groups, genders, and racial backgrounds of individuals involved in these incidents.
+
+# Load entire Tidyverse package
+```{r}
+library(tidyverse)
+```
+
+load data-set from the github which is sourced from the kaggle: https://www.kaggle.com/datasets/debjeetdas/nypd-shooting-incident-data
+
+```{r}
+nypd_url <- "https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/NYPD_Shooting_Incident_Data__Year_To_Date_.csv"
+```
+
+Read csv data using read.csv() function
+
+```{r}
+nypd_df <- read.csv(nypd_url)
+head(nypd_df)
+```
+# Data Cleansing
+
+```{r}
+# Drop rows with missing values in relevant columns
+nypd_clean <- nypd_df %>%
+  filter(!is.na(PERP_AGE_GROUP), !is.na(PERP_SEX), !is.na(PERP_RACE), !is.na(VIC_AGE_GROUP), !is.na(VIC_SEX), !is.na(VIC_RACE))
+head(nypd_clean)
+
+```
+Select only columns those are helpful to make this analysis, and drop all rows with NAs
+
+```{r}
+nypd_clean <- nypd_df %>%
+  select(PERP_AGE_GROUP, PERP_SEX, PERP_RACE, VIC_AGE_GROUP, VIC_SEX, VIC_RACE) %>%
+  filter(!is.na(PERP_AGE_GROUP), !is.na(PERP_SEX), !is.na(PERP_RACE), !is.na(VIC_AGE_GROUP), !is.na(VIC_SEX), !is.na(VIC_RACE))
+```
+
+# Explore Age Groups
+
+```{r}
+
+perp_age_distribution <- nypd_clean %>%
+  count(PERP_AGE_GROUP) %>%
+  arrange(PERP_AGE_GROUP)
+```
+
+# Visualize Age Groups
+
+perpetrator age group
+```{r}
+
+ggplot(perp_age_distribution, aes(x = PERP_AGE_GROUP, y = n)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Perpetrator Age Distribution", x = "Age Group", y = "Frequency")
+```
+
+
+Victim age group
+```{r}
+ggplot(vic_age_distribution, aes(x = VIC_AGE_GROUP, y = n)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Victim Age Distribution", x = "Age Group", y = "Frequency")
+```
+
