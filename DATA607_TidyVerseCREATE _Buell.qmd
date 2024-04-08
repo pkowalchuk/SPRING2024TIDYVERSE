@@ -38,6 +38,7 @@ ldr_raw <-
 
 head(ldr_raw)
 ```
+# Drop rows with NA values
 ```{r}
 # Drop rows with missing values in any column
 ldr_clean <- drop_na(ldr_raw)
