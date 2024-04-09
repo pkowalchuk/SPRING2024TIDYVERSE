@@ -22,6 +22,7 @@ library(tidyverse)
 
 # Alternatively, just install and load forcats:
 library(forcats)
+library(tidyr)
 ```
 
 ## Demo
@@ -38,12 +39,13 @@ ldr_raw <-
 
 head(ldr_raw)
 ```
-# Drop rows with NA values
+
 ```{r}
 # Drop rows with missing values in any column
 ldr_clean <- drop_na(ldr_raw)
 
 ```
+
 
 ### Creating factors
 
@@ -129,7 +131,6 @@ ldr_top5 <- ldr_cats |>
 top5_counts <- fct_count(ldr_top5$category)
 top5_counts
 ```
-# Visualize the distribution of the top 5 categories using ggplot which is also a part of Tidyverse.
 ```{r}
 #| label: plot top 5 categories
 ggplot(top5_counts, aes(x = f, y = n)) +
@@ -138,6 +139,8 @@ ggplot(top5_counts, aes(x = f, y = n)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+
 Now we see Lana's top 5 longest albums (in terms of track list) above, and there are `r top5_counts[top5_counts$f == "Other", 2]` songs under "other."
 
 ## Conclusion

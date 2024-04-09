@@ -30,6 +30,10 @@
 
 -   Keith DeNivo - *inadvertently* also created a vignette for forcats. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Keith_DeNivo_tidyverse_assignment.Rmd> using this dataset <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/cardekho.csv> factors used were the number of car owners.
 
--   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd>
+-   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd> <br />
+
+**Chhiring Lama** - < https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.Rmd > 
+- Chhiring Lama - I have pushed a .jpg and .csv file for ML presentation. <br />
+- Chhiring Lama - Added two code blocks on Naomi Buell's Tideverse CREATE Assignment; commited and pushed to remote repository. 
 
 -   Fares Alahdab - I created a vignette that shows the use of mutate, group_by, summarise, ggplot2, and cor() in a heart failure dataset: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/607_Tidyverse_GitHubColab_Fares_Alahdab.qmd>
