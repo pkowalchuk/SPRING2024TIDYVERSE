@@ -43,7 +43,7 @@ Select only columns those are helpful to make this analysis, and drop all rows w
 
 ```{r}
 nypd_clean <- nypd_df %>%
-  select(PERP_AGE_GROUP, PERP_SEX, PERP_RACE, VIC_AGE_GROUP, VIC_SEX, VIC_RACE) %>%
+  select(PERP_AGE_GROUP, PERP_SEX, PERP_RACE, VIC_AGE_GROUP, VIC_SEX, VIC_RACE, STATISTICAL_MURDER_FLAG) %>%
   filter(!is.na(PERP_AGE_GROUP), !is.na(PERP_SEX), !is.na(PERP_RACE), !is.na(VIC_AGE_GROUP), !is.na(VIC_SEX), !is.na(VIC_RACE))
 ```
 
@@ -54,6 +54,10 @@ nypd_clean <- nypd_df %>%
 perp_age_distribution <- nypd_clean %>%
   count(PERP_AGE_GROUP) %>%
   arrange(PERP_AGE_GROUP)
+
+vic_age_distribution <- nypd_clean %>%
+  count(VIC_AGE_GROUP) %>%
+  arrange(VIC_AGE_GROUP)
 ```
 
 # Visualize Age Groups
@@ -73,4 +77,53 @@ ggplot(vic_age_distribution, aes(x = VIC_AGE_GROUP, y = n)) +
   geom_bar(stat = "identity") +
   labs(title = "Victim Age Distribution", x = "Age Group", y = "Frequency")
 ```
+(FA) Trying to see which age group attacked which age group the most, or in other words: the frequency of incidents involving various combinations of perpetrator and victim age groups, highlighting which age groups are more commonly involved in incidents with each other.
+```{r}
+library(dplyr)
+library(ggplot2)
 
+# a table counting incidents by perpetrator and victim age group
+age_group_combinations <- nypd_clean %>%
+  count(PERP_AGE_GROUP, VIC_AGE_GROUP)
+
+# heat map
+ggplot(age_group_combinations, aes(x = PERP_AGE_GROUP, y = VIC_AGE_GROUP, fill = n)) +
+  geom_tile() + # This creates the heatmap tiles
+  scale_fill_gradient(low = "white", high = "red") + # Adjust colors as needed
+  theme_minimal() + # Clean theme
+  labs(x = "Perpetrator Age Group",
+       y = "Victim Age Group",
+       fill = "Incidents",
+       title = "Heatmap of Shooting Incidents by Age Group",
+       caption = "Data Source: NYPD") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+(FA) Now looking at the proportion of murders stratified by both the perpetrator's and victim's sexes:
+```{r}
+murder_proportions <- nypd_clean %>%
+  group_by(PERP_SEX, VIC_SEX, STATISTICAL_MURDER_FLAG) %>%
+  summarise(Incidents = n(), .groups = 'drop') %>%
+  ungroup() %>%
+  group_by(PERP_SEX, VIC_SEX) %>%
+  mutate(Total = sum(Incidents),
+         Proportion = Incidents / Total) %>%
+  ungroup() %>%
+  filter(STATISTICAL_MURDER_FLAG == "Y") %>%
+  select(PERP_SEX, VIC_SEX, Proportion)
+
+ggplot(murder_proportions, aes(x = PERP_SEX, y = Proportion, fill = VIC_SEX)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Proportion of Incidents Classified as Murders",
+       subtitle = "By Perpetrator and Victim Sex",
+       x = "Perpetrator Sex",
+       y = "Proportion (%)",
+       fill = "Victim Sex") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(size = 14, face = "bold"),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+```
+(FA) It is interesting that most murders committed by females were against males, while murders committed by males were just about 50-50. This may be due to a variety of reasons that would require more detailed variables to be acquired and added to understand.

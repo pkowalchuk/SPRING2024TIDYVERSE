@@ -37,3 +37,8 @@
 - Chhiring Lama - Added two code blocks on Naomi Buell's Tideverse CREATE Assignment; commited and pushed to remote repository. 
 
 -   Fares Alahdab - I created a vignette that shows the use of mutate, group_by, summarise, ggplot2, and cor() in a heart failure dataset: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/607_Tidyverse_GitHubColab_Fares_Alahdab.qmd>
+- Fares Alahdab (part-2): using the interesting datset on NY shooting incidents, I made the following edits:
+    1- I added the variable "STATISTICAL_MURDER_FLAG" to the variables kept from the main dataset when filtering as that seems important.
+    2- The second bar plot for the victim age groups was missing the vic_age_distribution so I added it to code chunk 7.
+    3- Using dplyr and ggplot2, I added a heat map showing the frequency of incidents by both the perpetrator's and victim's age groups.
+    4- Focusing on th sexes, I added a bar chart plotting the proportions of murders stratified by the perpetrator's and victim's sexes.
