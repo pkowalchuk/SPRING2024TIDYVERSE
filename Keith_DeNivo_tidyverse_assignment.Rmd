@@ -1,8 +1,12 @@
 ---
 title: "TIDYVERSE ASSIGNMENT"
-author: "Keith DeNivo"
-date: "2024-03-28"
+author: "Keith DeNivo,
+        Naomi Buell"
+date: "2024-04-09"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +15,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## TidyVerse Vignette
 
-Your task here is to Create an Example.  Using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with your selected dataset. (25 points)
-Later, you'll be asked to extend an existing vignette.  Using one of your classmate’s examples (as created above), you'll then extend his or her example with additional annotated code. (15 points)
-You should clone the provided repository.  Once you have code to submit, you should make a pull request on the shared repository.  You should also update the README.md file with your example.
-After you’ve created your vignette, please submit your GitHub handle name in the submission link provided below. This will let your instructor know that your work is ready to be peer-graded.
-You should complete your submission on the schedule stated in the course syllabus.
+Your task here is to Create an Example. Using one or more TidyVerse
+packages, and any dataset from fivethirtyeight.com or Kaggle, create a
+programming sample “vignette” that demonstrates how to use one or more
+of the capabilities of the selected TidyVerse package with your selected
+dataset. (25 points) Later, you'll be asked to extend an existing
+vignette. Using one of your classmate’s examples (as created above),
+you'll then extend his or her example with additional annotated code.
+(15 points) You should clone the provided repository. Once you have code
+to submit, you should make a pull request on the shared repository. You
+should also update the README.md file with your example. After you’ve
+created your vignette, please submit your GitHub handle name in the
+submission link provided below. This will let your instructor know that
+your work is ready to be peer-graded. You should complete your
+submission on the schedule stated in the course syllabus.
 
 ```{r library}
 library(tidyverse)
@@ -24,61 +37,79 @@ library(dplyr)
 library(RCurl)
 library(tidyr)
 ```
+
 ## FORCATS VIGNETTE
 
 ## forcats
-resources:
-https://r4ds.hadley.nz/factors.html
-https://forcats.tidyverse.org/
+
+Resources: <https://r4ds.hadley.nz/factors.html>
+<https://forcats.tidyverse.org/>
 
 forcats is most useful when dealing with factors.
 
-"Factors are used for categorical variables, variables that have a fixed and known set of possible values. They are also useful when you want to display character vectors in a non-alphabetical order."
-- https://r4ds.hadley.nz/factors.html
+"Factors are used for categorical variables, variables that have a fixed
+and known set of possible values. They are also useful when you want to
+display character vectors in a non-alphabetical order." -
+<https://r4ds.hadley.nz/factors.html>
 
-forcats is most useful when dealing with factors.  Factors are character vectors such as eye color.  It works best when there are limited number of character vectors such as eye colors "brown", "blue", "green" etc.
+forcats is most useful when dealing with factors. Factors are character
+vectors such as eye color. It works best when there are limited number
+of character vectors such as eye colors "brown", "blue", "green" etc.
 
-In this car data set there are a couple of columns with character vectors.  We will be looking at the "owner" column in the dataset.  It displays the number of owners a car has, but using characters instead of numerically.
+In this car data set there are a couple of columns with character
+vectors. We will be looking at the "owner" column in the dataset. It
+displays the number of owners a car has, but using characters instead of
+numerically.
 
-Data source: https://www.kaggle.com/datasets/sukhmandeepsinghbrar/car-price-prediction-dataset/data
- 
-some forcats functions:
-"
-fct_reorder(): Reordering a factor by another variable.
-fct_infreq(): Reordering a factor by the frequency of values.
-fct_relevel(): Changing the order of a factor by hand.
-fct_lump(): Collapsing the least/most frequent values of a factor into “other”.
-" - https://forcats.tidyverse.org/
+Data source:
+<https://www.kaggle.com/datasets/sukhmandeepsinghbrar/car-price-prediction-dataset/data>
+
+Some forcats functions: " fct_reorder(): Reordering a factor by another
+variable. fct_infreq(): Reordering a factor by the frequency of values.
+fct_relevel(): Changing the order of a factor by hand. fct_lump():
+Collapsing the least/most frequent values of a factor into “other”. " -
+<https://forcats.tidyverse.org/>
 
 We will take a look at fct_reorder() and fct_infreq().
 
 ```{r read in data}
 
-
-car_url <- getURL("https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/cardekho.csv")
-car_df <- data.frame(read.csv(text = car_url) )
+car_url <-
+  getURL(
+    "https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/cardekho.csv"
+  )
+car_df <- data.frame(read.csv(text = car_url))
 head(car_df)
 names(car_df)
 
 ```
-##Data
-Data set uploaded to the tidyverse git.  Data is read into a dataframe.  The data contains car names, the number of owners the car has had, years, etc.
 
+## Data 
+
+Data set uploaded to the tidyverse git. Data is read into a dataframe.
+The data contains car names, the number of owners the car has had,
+years, etc.
 
 ```{r owners}
-# What are the types of owners?  
+# What are the types of owners?
 unique(car_df$owner)
 car_df |> count(owner)
 
 
-owner_levels <- c(
-  "Test Drive Car", "First Owner", "Second Owner", "Third Owner", "Fourth & Above Owner" 
-)
+owner_levels <- c("Test Drive Car",
+                  "First Owner",
+                  "Second Owner",
+                  "Third Owner",
+                  "Fourth & Above Owner")
 #setting the order the owners will appear.
 ```
-##Factors
 
-One thing useful about factors is it allows one to set any order of the character vectors, not just in alphabetical order.  Using levels we are about to designate the number of owners in ascending order.
+## Factors
+
+One thing useful about factors is it allows one to set any order of the
+character vectors, not just in alphabetical order. Using levels we are
+about to designate the number of owners in ascending order.
+
 ```{r factors}
 
 num_owners <- car_df$owner
@@ -86,37 +117,41 @@ o1 <- factor(num_owners, levels = owner_levels)
 sort(o1[1:100])
 # the values in a column can be sorted by the levels what about the entire dataframe?
 
-car_df <- car_df %>% 
+car_df <- car_df %>%
   arrange(factor(owner, levels = owner_levels))
 #the dataframe can now be listed by the number of owners.
 
-knitr::kable(car_df[1:20, 1:8], format="html")
+knitr::kable(car_df[1:20, 1:8], format = "html")
 ```
-##Reorder
-reordering data frames by factors with user defined levels can be useful, but what about graphs?
+
+## Reorder 
+
+Reordering data frames by factors with user defined levels can be
+useful, but what about graphs?
+
 ```{r graphs }
 #another package is ggplot2 for graphs
-ggplot(car_df, aes(x = selling_price, y = owner) )+
+ggplot(car_df, aes(x = selling_price, y = owner)) +
   geom_boxplot()
 # not ordered
-ggplot(car_df, aes(x = selling_price, y = fct_reorder(owner, selling_price) ))+
+ggplot(car_df, aes(x = selling_price, y = fct_reorder(owner, selling_price))) +
   geom_boxplot()
 #ordered by selling price for the factors.
 ```
 
-##Sorting/Arranging
-The factors can be reordered by the which ones had the highest values.
+## Sorting/Arranging
 
+The factors can be reordered by the which ones had the highest values.
 
 ```{r example what forcats is not for}
 
-ggplot(car_df, aes(x = year, y = selling_price, group =year) )+
+ggplot(car_df, aes(x = year, y = selling_price, group = year)) +
   geom_boxplot()
-  # the sorting with forcats only works with factors and can not be used to order numerical values, there are many other tools to easily sort by numerical value.
+# the sorting with forcats only works with factors and can not be used to order numerical values, there are many other tools to easily sort by numerical value.
 
 ```
 
-``` {r by frequency of factor}
+```{r by frequency of factor}
 car_df |> 
 mutate(owner = fct_infreq(owner)) %>%
   ggplot(aes(x = owner)) + 
@@ -127,8 +162,47 @@ mutate(owner = fct_infreq(owner)) %>%
 #sort by the frequency of a owner
 
 ```
-##Conclusion
 
-fct_infreq can be used to sort by the frequency of the factor.
-The numerical values for the y values of factors can be reordered using fct_reorder
-fct_reorder() and fact_infreq were used to reorder data frames and graphs.
+## Adding/Dropping
+
+Additionally, we can drop factors with the `fct_drop()` function, which
+drops unused levels. Below, we drop the test drive data and the
+corresponding level from the factor categorizing the number of owners of
+a car.
+
+```{r dropping factors}
+
+# Filtering test cars out of our data so that it becomes an "unused" level
+num_owners_nontest <- car_df$owner[car_df$owner != "Test Drive Car"]
+
+# Assigning new factor `o2` based on the number of owners in the filtered dataset. There are still 5 levels of this factor, despite there being observations for only 4 of these levels in the data.
+o2 <- factor(num_owners_nontest, levels = owner_levels)
+levels(o2)
+
+# Using fct_drop() to remove unused "Test Drive Car" level
+o2 <- fct_drop(o2)
+
+# Display the levels of the modified factor
+levels(o2)
+```
+
+The `o2` factor was created with 4 levels as displayed above.
+
+We can also add a level to a factor with the function `fct_expand`. I
+created the level "Non-owner" to add to the factor `o2` created in the
+previous segment:
+
+```{r adding factors}
+o3 <- fct_expand(o2, "Non-owner")
+levels(o3)
+```
+
+## Conclusion
+
+fct_infreq can be used to sort by the frequency of the factor. The
+numerical values for the y values of factors can be reordered using
+fct_reorder fct_reorder() and fact_infreq were used to reorder data
+frames and graphs.
+
+To extend this assignment, we also explored how to add and drop levels
+to/from factors.
