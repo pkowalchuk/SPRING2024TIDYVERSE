@@ -32,6 +32,7 @@
     - Naomi Buell extended Keith's vignette for forcats by adding how to add and drop factor levels.
 
 -   Rashad Long - I created a vignette for the purrr package discussing the map() function: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Vignette_PURR_Rashad_Long.qmd> <br />
+        - Semyon Toybis - I extended Rashad's analysis to analyze total career touchdowns over the course of a career for a group of quarterbacks
 
 **Chhiring Lama** - < https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/DATA607_TidyVerseCREATE%20_Buell.Rmd > 
 - Chhiring Lama - I have pushed a .jpg and .csv file for ML presentation. <br />
