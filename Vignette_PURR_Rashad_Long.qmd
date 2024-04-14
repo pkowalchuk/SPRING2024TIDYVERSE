@@ -75,19 +75,40 @@ passing_stats_sd
 
 As you can see the map function allowed us to apply some solution to an entire data-frame in one command!
 
+## Extend - Semyon Toybis
+
+I am interested in comparing the amount of total career touchdowns over the course of the careers of some notable quarterbacks.
+
+I start by reading in the original file to have the player names and create a vector of quarterbacks that I am interested in comparing. I subset the original data frame for the QBs I am interested in.
+
+```{r}
+statsWithNames <- read.csv("passing_cleaned.csv")
+
+qbsOfInterest <- c('Eli Manning', 'Ben Roethlisberger', 'Aaron Rodgers', 'Joe Burrow', 'Lamar Jackson', 'Patrick Mahomes')
+
+statsFiltered <- subset(statsWithNames, Player %in% qbsOfInterest)
+
+head(statsFiltered, n=10)
+```
+
+Next, I create a new data frame that has the names of the players, their year in the league, and the TDs for that year. In that new data frame, I create a column that has the cumulative sum of TDs for each player. I then sort the data frame by Player and Year, group by player, and add a column that has the year in the league for the player, which is the row number. This allows us to analyze how many TDs each QB had in their first, second, third, etc. year in the league. I used the Dplyr functions 'select', 'group_by', and 'mutate'.
+
+```{r}
+
+cumulativeTDs <- statsFiltered |> select(Player, TD, Year) |> group_by(Player) |>
+  mutate(cumualativeTDs = cumsum(TD))
+
+cumulativeTDs <- cumulativeTDs |> arrange(Player, Year) |>
+  group_by(Player) |> mutate(YearInLeage = row_number())
 
 
+head(cumulativeTDs, n = 10)
+```
 
+Below I visualize the cumulative TDs over time by player. I use the ggplot2 package.
 
+```{r}
+cumulativeTDs |> ggplot(aes(x = YearInLeage, y = cumualativeTDs, color = Player)) + geom_line() + ggtitle('Amount of career touchdowns over time by QB')
+```
 
-
-
-
-
-
-
-
-
-
-
-
+Interestingly, Patrick Mahomes is by far ahead of the other QBs for total career touch downs at this point in his career. Aaron Rodgers, who has the most TDs of the group interestingly spent a few years in the league before he recorded his first TD (those familiar with the NFL will know it was because he was a backup for Brett Favre and didn't play his first few years). It would be interesting to include QBs like Peyton Manning and Tom Brady in this analysis, but their careers started before 2001 so the data set does not fully capture their careers.

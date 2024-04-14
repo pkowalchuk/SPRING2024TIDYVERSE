@@ -1,14 +1,21 @@
+<<<<<<< HEAD
 /*!
  * Bootstrap Icons v1.11.1 (https://icons.getbootstrap.com/)
  * Copyright 2019-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/icons/blob/main/LICENSE)
  */
 
+=======
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 @font-face {
   font-display: block;
   font-family: "bootstrap-icons";
   src: 
+<<<<<<< HEAD
 url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
+=======
+url("./bootstrap-icons.woff?2ab2cbbe07fcebb53bdaa7313bb290f2") format("woff");
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 }
 
 .bi::before,
@@ -447,6 +454,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-cloud-fog2::before { content: "\f2a2"; }
 .bi-cloud-hail-fill::before { content: "\f2a3"; }
 .bi-cloud-hail::before { content: "\f2a4"; }
+<<<<<<< HEAD
+=======
+.bi-cloud-haze-1::before { content: "\f2a5"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-cloud-haze-fill::before { content: "\f2a6"; }
 .bi-cloud-haze::before { content: "\f2a7"; }
 .bi-cloud-haze2-fill::before { content: "\f2a8"; }
@@ -1442,16 +1453,33 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-dpad::before { content: "\f687"; }
 .bi-ear-fill::before { content: "\f688"; }
 .bi-ear::before { content: "\f689"; }
+<<<<<<< HEAD
 .bi-envelope-check-fill::before { content: "\f68b"; }
 .bi-envelope-check::before { content: "\f68c"; }
 .bi-envelope-dash-fill::before { content: "\f68e"; }
 .bi-envelope-dash::before { content: "\f68f"; }
+=======
+.bi-envelope-check-1::before { content: "\f68a"; }
+.bi-envelope-check-fill::before { content: "\f68b"; }
+.bi-envelope-check::before { content: "\f68c"; }
+.bi-envelope-dash-1::before { content: "\f68d"; }
+.bi-envelope-dash-fill::before { content: "\f68e"; }
+.bi-envelope-dash::before { content: "\f68f"; }
+.bi-envelope-exclamation-1::before { content: "\f690"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-envelope-exclamation-fill::before { content: "\f691"; }
 .bi-envelope-exclamation::before { content: "\f692"; }
 .bi-envelope-plus-fill::before { content: "\f693"; }
 .bi-envelope-plus::before { content: "\f694"; }
+<<<<<<< HEAD
 .bi-envelope-slash-fill::before { content: "\f696"; }
 .bi-envelope-slash::before { content: "\f697"; }
+=======
+.bi-envelope-slash-1::before { content: "\f695"; }
+.bi-envelope-slash-fill::before { content: "\f696"; }
+.bi-envelope-slash::before { content: "\f697"; }
+.bi-envelope-x-1::before { content: "\f698"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-envelope-x-fill::before { content: "\f699"; }
 .bi-envelope-x::before { content: "\f69a"; }
 .bi-explicit-fill::before { content: "\f69b"; }
@@ -1461,6 +1489,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-list-columns-reverse::before { content: "\f69f"; }
 .bi-list-columns::before { content: "\f6a0"; }
 .bi-meta::before { content: "\f6a1"; }
+<<<<<<< HEAD
+=======
+.bi-mortorboard-fill::before { content: "\f6a2"; }
+.bi-mortorboard::before { content: "\f6a3"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-nintendo-switch::before { content: "\f6a4"; }
 .bi-pc-display-horizontal::before { content: "\f6a5"; }
 .bi-pc-display::before { content: "\f6a6"; }
@@ -1479,6 +1512,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-send-check::before { content: "\f6b3"; }
 .bi-send-dash-fill::before { content: "\f6b4"; }
 .bi-send-dash::before { content: "\f6b5"; }
+<<<<<<< HEAD
+=======
+.bi-send-exclamation-1::before { content: "\f6b6"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-send-exclamation-fill::before { content: "\f6b7"; }
 .bi-send-exclamation::before { content: "\f6b8"; }
 .bi-send-fill::before { content: "\f6b9"; }
@@ -1490,6 +1527,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-send-x::before { content: "\f6bf"; }
 .bi-send::before { content: "\f6c0"; }
 .bi-steam::before { content: "\f6c1"; }
+<<<<<<< HEAD
+=======
+.bi-terminal-dash-1::before { content: "\f6c2"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-terminal-dash::before { content: "\f6c3"; }
 .bi-terminal-plus::before { content: "\f6c4"; }
 .bi-terminal-split::before { content: "\f6c5"; }
@@ -1519,6 +1560,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-usb-symbol::before { content: "\f6dd"; }
 .bi-usb::before { content: "\f6de"; }
 .bi-boombox-fill::before { content: "\f6df"; }
+<<<<<<< HEAD
+=======
+.bi-displayport-1::before { content: "\f6e0"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-displayport::before { content: "\f6e1"; }
 .bi-gpu-card::before { content: "\f6e2"; }
 .bi-memory::before { content: "\f6e3"; }
@@ -1531,6 +1576,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-pci-card::before { content: "\f6ea"; }
 .bi-router-fill::before { content: "\f6eb"; }
 .bi-router::before { content: "\f6ec"; }
+<<<<<<< HEAD
+=======
+.bi-ssd-fill::before { content: "\f6ed"; }
+.bi-ssd::before { content: "\f6ee"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-thunderbolt-fill::before { content: "\f6ef"; }
 .bi-thunderbolt::before { content: "\f6f0"; }
 .bi-usb-drive-fill::before { content: "\f6f1"; }
@@ -1637,6 +1687,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-filetype-pdf::before { content: "\f756"; }
 .bi-filetype-php::before { content: "\f757"; }
 .bi-filetype-png::before { content: "\f758"; }
+<<<<<<< HEAD
+=======
+.bi-filetype-ppt-1::before { content: "\f759"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-filetype-ppt::before { content: "\f75a"; }
 .bi-filetype-psd::before { content: "\f75b"; }
 .bi-filetype-py::before { content: "\f75c"; }
@@ -1652,6 +1706,10 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-filetype-txt::before { content: "\f766"; }
 .bi-filetype-wav::before { content: "\f767"; }
 .bi-filetype-woff::before { content: "\f768"; }
+<<<<<<< HEAD
+=======
+.bi-filetype-xls-1::before { content: "\f769"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-filetype-xls::before { content: "\f76a"; }
 .bi-filetype-xml::before { content: "\f76b"; }
 .bi-filetype-yml::before { content: "\f76c"; }
@@ -1694,38 +1752,83 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-filetype-json::before { content: "\f791"; }
 .bi-filetype-pptx::before { content: "\f792"; }
 .bi-filetype-xlsx::before { content: "\f793"; }
+<<<<<<< HEAD
+=======
+.bi-1-circle-1::before { content: "\f794"; }
+.bi-1-circle-fill-1::before { content: "\f795"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-1-circle-fill::before { content: "\f796"; }
 .bi-1-circle::before { content: "\f797"; }
 .bi-1-square-fill::before { content: "\f798"; }
 .bi-1-square::before { content: "\f799"; }
+<<<<<<< HEAD
+=======
+.bi-2-circle-1::before { content: "\f79a"; }
+.bi-2-circle-fill-1::before { content: "\f79b"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-2-circle-fill::before { content: "\f79c"; }
 .bi-2-circle::before { content: "\f79d"; }
 .bi-2-square-fill::before { content: "\f79e"; }
 .bi-2-square::before { content: "\f79f"; }
+<<<<<<< HEAD
+=======
+.bi-3-circle-1::before { content: "\f7a0"; }
+.bi-3-circle-fill-1::before { content: "\f7a1"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-3-circle-fill::before { content: "\f7a2"; }
 .bi-3-circle::before { content: "\f7a3"; }
 .bi-3-square-fill::before { content: "\f7a4"; }
 .bi-3-square::before { content: "\f7a5"; }
+<<<<<<< HEAD
+=======
+.bi-4-circle-1::before { content: "\f7a6"; }
+.bi-4-circle-fill-1::before { content: "\f7a7"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-4-circle-fill::before { content: "\f7a8"; }
 .bi-4-circle::before { content: "\f7a9"; }
 .bi-4-square-fill::before { content: "\f7aa"; }
 .bi-4-square::before { content: "\f7ab"; }
+<<<<<<< HEAD
+=======
+.bi-5-circle-1::before { content: "\f7ac"; }
+.bi-5-circle-fill-1::before { content: "\f7ad"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-5-circle-fill::before { content: "\f7ae"; }
 .bi-5-circle::before { content: "\f7af"; }
 .bi-5-square-fill::before { content: "\f7b0"; }
 .bi-5-square::before { content: "\f7b1"; }
+<<<<<<< HEAD
+=======
+.bi-6-circle-1::before { content: "\f7b2"; }
+.bi-6-circle-fill-1::before { content: "\f7b3"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-6-circle-fill::before { content: "\f7b4"; }
 .bi-6-circle::before { content: "\f7b5"; }
 .bi-6-square-fill::before { content: "\f7b6"; }
 .bi-6-square::before { content: "\f7b7"; }
+<<<<<<< HEAD
+=======
+.bi-7-circle-1::before { content: "\f7b8"; }
+.bi-7-circle-fill-1::before { content: "\f7b9"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-7-circle-fill::before { content: "\f7ba"; }
 .bi-7-circle::before { content: "\f7bb"; }
 .bi-7-square-fill::before { content: "\f7bc"; }
 .bi-7-square::before { content: "\f7bd"; }
+<<<<<<< HEAD
+=======
+.bi-8-circle-1::before { content: "\f7be"; }
+.bi-8-circle-fill-1::before { content: "\f7bf"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-8-circle-fill::before { content: "\f7c0"; }
 .bi-8-circle::before { content: "\f7c1"; }
 .bi-8-square-fill::before { content: "\f7c2"; }
 .bi-8-square::before { content: "\f7c3"; }
+<<<<<<< HEAD
+=======
+.bi-9-circle-1::before { content: "\f7c4"; }
+.bi-9-circle-fill-1::before { content: "\f7c5"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-9-circle-fill::before { content: "\f7c6"; }
 .bi-9-circle::before { content: "\f7c7"; }
 .bi-9-square-fill::before { content: "\f7c8"; }
@@ -1744,6 +1847,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-browser-edge::before { content: "\f7d5"; }
 .bi-browser-firefox::before { content: "\f7d6"; }
 .bi-browser-safari::before { content: "\f7d7"; }
+<<<<<<< HEAD
+=======
+.bi-c-circle-1::before { content: "\f7d8"; }
+.bi-c-circle-fill-1::before { content: "\f7d9"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-c-circle-fill::before { content: "\f7da"; }
 .bi-c-circle::before { content: "\f7db"; }
 .bi-c-square-fill::before { content: "\f7dc"; }
@@ -1754,6 +1862,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-car-front::before { content: "\f7e1"; }
 .bi-cassette-fill::before { content: "\f7e2"; }
 .bi-cassette::before { content: "\f7e3"; }
+<<<<<<< HEAD
+=======
+.bi-cc-circle-1::before { content: "\f7e4"; }
+.bi-cc-circle-fill-1::before { content: "\f7e5"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-cc-circle-fill::before { content: "\f7e6"; }
 .bi-cc-circle::before { content: "\f7e7"; }
 .bi-cc-square-fill::before { content: "\f7e8"; }
@@ -1772,6 +1885,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-filetype-sql::before { content: "\f7f5"; }
 .bi-fire::before { content: "\f7f6"; }
 .bi-google-play::before { content: "\f7f7"; }
+<<<<<<< HEAD
+=======
+.bi-h-circle-1::before { content: "\f7f8"; }
+.bi-h-circle-fill-1::before { content: "\f7f9"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-h-circle-fill::before { content: "\f7fa"; }
 .bi-h-circle::before { content: "\f7fb"; }
 .bi-h-square-fill::before { content: "\f7fc"; }
@@ -1780,6 +1898,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-lungs-fill::before { content: "\f7ff"; }
 .bi-lungs::before { content: "\f800"; }
 .bi-microsoft-teams::before { content: "\f801"; }
+<<<<<<< HEAD
+=======
+.bi-p-circle-1::before { content: "\f802"; }
+.bi-p-circle-fill-1::before { content: "\f803"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-p-circle-fill::before { content: "\f804"; }
 .bi-p-circle::before { content: "\f805"; }
 .bi-p-square-fill::before { content: "\f806"; }
@@ -1788,6 +1911,11 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-pass::before { content: "\f809"; }
 .bi-prescription::before { content: "\f80a"; }
 .bi-prescription2::before { content: "\f80b"; }
+<<<<<<< HEAD
+=======
+.bi-r-circle-1::before { content: "\f80c"; }
+.bi-r-circle-fill-1::before { content: "\f80d"; }
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
 .bi-r-circle-fill::before { content: "\f80e"; }
 .bi-r-circle::before { content: "\f80f"; }
 .bi-r-square-fill::before { content: "\f810"; }
@@ -1979,6 +2107,7 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-sina-weibo::before { content: "\f8ca"; }
 .bi-tencent-qq::before { content: "\f8cb"; }
 .bi-wikipedia::before { content: "\f8cc"; }
+<<<<<<< HEAD
 .bi-alphabet-uppercase::before { content: "\f2a5"; }
 .bi-alphabet::before { content: "\f68a"; }
 .bi-amazon::before { content: "\f68d"; }
@@ -2076,3 +2205,5 @@ url("./bootstrap-icons.woff?2820a3852bdb9a5832199cc61cec4e65") format("woff");
 .bi-suitcase2-fill::before { content: "\f901"; }
 .bi-suitcase2::before { content: "\f902"; }
 .bi-vignette::before { content: "\f903"; }
+=======
+>>>>>>> ca4d07541348097a98bde71f61b16d399c76cf37
