@@ -45,4 +45,5 @@
     (3)- Using dplyr and ggplot2, I added a heat map showing the frequency of incidents by both the perpetrators' and victims' age groups.
     (4)- Focusing on th sexes, I added a bar chart plotting the proportions of murders stratified by the perpetrators' and victims' sexes.
 
-- Ursula Podosenin- I extended Puja Roy's Tidyverse CREATE assignment by adding two additional columns, one for the overall average price, and one that labels a drink as "cheaper" or "more expensive" when compared against the average price. I also plotted the frequency of the overall average of coffee prices and found the min and max values in the aata set. 
+- Ursula Podosenin- I extended Puja Roy's Tidyverse CREATE assignment by adding two additional columns, one for the overall average price, and one that labels a drink as "cheaper" or "more expensive" when compared against the average price. I also plotted the frequency of the overall average of coffee prices and found the min and max values in the aata set.
+- Mohammed Rahman - I created a Vignette for Dplyr and Tidyverse packages: <https://github.com/mrahman234/SPRING2024TIDYVERSE/blob/main/tidyverse_create_mohammed.Rmd> <br />
