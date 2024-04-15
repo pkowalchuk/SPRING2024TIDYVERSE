@@ -152,7 +152,7 @@ ggplot(avg_calories, aes(Category, mean_calories, fill = Category)) +
 
 ## Additional dplyr and ggplot2 functionality:
 
-There are many more functions in dplyr and ggplot2, and below, we introduce a few more to (1) identify the category with the highest mean calories per gram and (2) create a graph of the calories per gram for each item in that category.
+As you can see, dplyr and ggplot2 provide a wealth of useful functions. Below, we introduce a few more to (1) identify the category with the highest mean calories per gram and (2) create a graph of the calories per gram for each item in that category.
 
 First, we use the dplyr function **mutate** along with group_by and summarize to add a calculation at the category level and then add the dplyr function **arrange** to view the categories with the highest mean calories per gram:
 
