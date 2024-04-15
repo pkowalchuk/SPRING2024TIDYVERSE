@@ -20,3 +20,5 @@
 - Kaylie Evans - Using the ggplot2 package, the following vignette was created: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
 
 - Will Berritt - I created a Vignette for dplyr and ggplot2 packages: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/berritt_tidyverse_create.Rmd>
+
+- Will Berritt (extend) - I added to Kaylie Evans' RMD using using ggplot, dplyr and tidyr: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
