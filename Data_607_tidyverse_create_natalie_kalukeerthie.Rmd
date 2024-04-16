@@ -124,3 +124,38 @@ Nissin seems to be the winner by a long shot, with more than 8x the number of 5-
 ## Conclusion
 
 ggplot, which is a function in Tidyverse, is a powerful and versatile tool for building visualizations in R. It's flexible grammar of graphics and wide variety of visualization options makes it very customizable in making high quality plots and charts.
+
+
+# Tidyverse Extended - Anna Moy
+
+Adding additional theme and faceting that could be added to ggplots. 
+
+Which ramen brand in Taiwan has a 5 star rating. 
+```{r plot-extended}
+ramen_taiwan <- ramen %>%
+  filter(Country == "Taiwan" & Stars == 5)
+
+ggplot(ramen_taiwan, aes(Brand, fill = Brand)) +
+  labs(title = "Taiwan 5 Star Rating Brands", 
+       y = "# of Variety in Each Brand",
+      x = "Brand") +
+  theme_dark() +
+  coord_flip()+
+  geom_bar()
+
+```
+
+
+```{r another-plot}
+nissin <- ramen %>%
+  filter(Brand == "Nissin" |Brand == "New Touch")
+
+ggplot(nissin, aes(Style, fill = "red")) +
+   labs(title = "Nissin & New Touch's Ramen Style", 
+       y = "# of Nissin Ramen",
+      x = "Style of Ramen") +
+  geom_bar() +
+   facet_wrap(~Brand)
+```
+
+
