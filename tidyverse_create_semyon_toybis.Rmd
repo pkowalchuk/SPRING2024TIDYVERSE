@@ -101,3 +101,34 @@ glimpse(flightReviewData)
 ## Further analysis
 
 Some potential analysis includes seeing which airlines have the highest overall rating, seeing if the average rating is higher for direct flights or layover flights, examining if certain months have higher average ratings, examining if certain types of travelers give higher ratings and whether that holds for direct or non-direct flights, etc.
+
+
+##Additional code by Andrianina David Raharijao:
+
+Hello, I will be adding some code to make some visualization using ggplot2
+
+```{r package_load}
+library(ggplot2)
+```
+
+Bar chart to visualize the number of flights reviewed per airline
+
+```{r bar1}
+ggplot(flightReviewData, aes(x = Airline)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  labs(title = "Number of Flight Reviews per Airline",
+       x = "Airline",
+       y = "Count of Reviews")
+```
+
+Box plot looking at the distribution of overall ratings by class.
+
+```{r bar2}
+ggplot(flightReviewData, aes(x = Class, y = Overall.Rating)) +
+  geom_boxplot() +
+  labs(title = "Distribution of Overall Ratings by Class",
+       x = "Class",
+       y = "Overall Rating")
+```
+

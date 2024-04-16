@@ -149,3 +149,64 @@ ggplot(avg_calories, aes(Category, mean_calories, fill = Category)) +
   xlab("Each Category") +
   ggtitle("Average Calories For Each Category")
 ```
+
+## Additional dplyr and ggplot2 functionality:
+
+As you can see, dplyr and ggplot2 provide a wealth of useful functions. Below, we introduce a few more to (1) identify the category with the highest mean calories per gram and (2) create a graph of the calories per gram for each item in that category.
+
+First, we use the dplyr function **mutate** along with group_by and summarize to add a calculation at the category level and then add the dplyr function **arrange** to view the categories with the highest mean calories per gram:
+
+``` {r cal_gram}
+
+# Calculate calories per gram by category and sort in descending order
+
+df_cal_gram_category <- calories %>% 
+  group_by (Category) %>% 
+  summarise(calories = sum(Calories), grams = sum(`Avg Serving Size`)) %>% 
+  mutate(cal_per_gram = calories/grams) %>% 
+  arrange(desc(cal_per_gram))
+  
+# To view the first ten records, we can use the base R "head" function (note that head defaults to n = 6 if you're in a hurry):
+
+head(df_cal_gram_category, n = 10)
+
+```
+
+To isolate the category with the highest mean, we can use another dplyr "slice" function called **slice_head** to take the top record and make a new dataframe.
+
+Then the dplyr filtering join **semi_join** can be applied to the original calories dataframe to filter it down to the category with the highest calories/gram:
+
+``` {r top_cat}  
+df_top_cal_gram_category <- slice_head(df_cal_gram_category, n=1)
+
+df_top_cal_gram_category
+
+df_top_cal_gram_cat_items <- calories %>% 
+  semi_join(df_top_cal_gram_category) 
+
+```
+
+  
+Then we can repeat the calculation of average calories per gram and create another plot.
+
+This time, we use the **scale_y_continuous** ggplot argument to ensure there are a proper number of tick marks on the Y axis and formet the axis labels with two decimal points. We also add the "reorder" function to the definition of our X variable to sort the bars in descending order.
+
+``` {r plot2}
+df_top_cal_gram_cat_items <- df_top_cal_gram_cat_items %>% 
+  mutate (cal_per_gram_item = Calories/`Avg Serving Size`)  %>% 
+  arrange(desc(cal_per_gram_item)) 
+
+# And create another plot: this time, we use "reorder" when defining our x variable and 
+# add "scale_y_continuous" to format the tick marks and labels
+
+df_top_cal_gram_cat_items %>% 
+  ggplot(aes(x = reorder(`food items`, cal_per_gram_item), y = cal_per_gram_item)) +
+  geom_col(fill = "darkseagreen4") +
+  coord_flip() +
+  scale_y_continuous(labels = function(x) format(x, nsmall = 2),
+                     breaks = scales::pretty_breaks(n = 10)) +
+  ggtitle("Nuts and Seeds: Calories per Gram by Item") + 
+  xlab("Food Item") +
+  ylab("Calories Per Gram")
+
+```

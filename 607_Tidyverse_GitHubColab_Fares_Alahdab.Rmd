@@ -1,0 +1,71 @@
+---
+title: "607_Tidyverse_GithubColab"
+author: "Fares A"
+date: "2024-04-01"
+output: html_document
+---
+
+Loading a Kaggle dataset on heart failure:
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/unsecuredAMRAP/HeartFailure_K/main/heart.csv")
+
+colnames(df)
+```
+
+Loading the package
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+
+## Step 1:
+
+Exploring age and cholesterol levels in relation to heart disease: I will use the mutate, group_by, and the summarise functions here:
+```{r}
+heart_data <- df %>%
+  mutate(AgeGroup = case_when(
+    Age < 45 ~ "<45",
+    Age >= 45 & Age < 65 ~ "45-65",
+    TRUE ~ "65+"
+  )) %>%
+  group_by(HeartDisease, AgeGroup) %>%
+  summarise(AverageCholesterol = mean(Cholesterol, na.rm = TRUE),
+            .groups = 'drop')
+
+heart_data
+```
+
+Visualize with ggplot2
+```{r}
+ggplot(heart_data, aes(x = AgeGroup, y = AverageCholesterol, fill = factor(HeartDisease))) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  scale_fill_manual(values = c("0" = "lightblue", "1" = "salmon")) +
+  labs(title = "Average Cholesterol Levels by Age Group and Heart Disease",
+       x = "Age Group",
+       y = "Average Cholesterol Level",
+       fill = "Heart Disease") +
+  theme_minimal()
+
+```
+
+## Step 2:
+ 
+Now I will use the cor() function to find possible correlations between important variables:
+```{r}
+correlation_matrix <- df %>%
+  select(Age, RestingBP, Cholesterol, MaxHR, Oldpeak) %>%
+  cor(use = "complete.obs")
+```
+
+
+Moving on from that, I will try to visualize the pairwise relationships using the GGally::ggpairs function:
+```{r}
+library(GGally)
+df %>%
+  select(Age, RestingBP, Cholesterol, MaxHR, Oldpeak) %>%
+  ggpairs()
+
+```
+
+===============================================================================
+

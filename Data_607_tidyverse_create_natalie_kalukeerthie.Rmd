@@ -1,0 +1,161 @@
+---
+title: "Data 607 - Tidyverse CREATE"
+author: "Natalie Kalukeerthie"
+date: "2024-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+In this assignment, you’ll practice collaborating around a code project with GitHub.You could consider our collective work as building out a book of examples on how to use TidyVerse functions.
+
+GitHub repository: https://github.com/pkowalchuk/SPRING2024TIDYVERSE
+
+FiveThirtyEight.com datasets
+
+Kaggle datasets
+
+Your task here is to Create an Example.  Using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with your selected dataset. (25 points)
+
+Later, you'll be asked to extend an existing vignette.  Using one of your classmate’s examples (as created above), you'll then extend his or her example with additional annotated code. (15 points)
+
+You should clone the provided repository.  Once you have code to submit, you should make a pull request on the shared repository.  You should also update the README.md file with your example.
+
+After you’ve created your vignette, please submit your GitHub handle name in the submission link provided below. This will let your instructor know that your work is ready to be peer-graded.
+
+You should complete your submission on the schedule stated in the course syllabus.
+
+
+## Tidyverse Packages
+We will be using the following package: ggplot2
+
+ggplot 2 is a system for declaratively creating graphics. Essentially, you provide data, and state what/how to map your variables, and it will create your visuals.
+
+### Load libraries
+```{r load-library}
+# load in the library
+library(plyr)
+library(tidyverse)
+library(forcats)
+```
+
+## The Data
+
+We'll be looking at a data set containing ramen reviews collected from a product review website, which emcompasses a variety of attributes relating to review like product name, country of origin, etc. The raiting is based on a 5-point scale.
+
+https://www.kaggle.com/datasets/residentmario/ramen-ratings
+
+### Reading CSV
+
+```{r read-csv-file}
+# read the one file with all different dataset combined
+ramen <- read_csv("https://raw.githubusercontent.com/nk014914/Data-607/main/ramen-ratings.csv")
+
+#let's view the dataset
+
+glimpse(ramen)
+head(ramen)
+
+```
+
+
+## Creating the Vignette 
+
+ggplot2 can be a really powerful tool to making discoveries in your data. By being able to visualize the data, we can answer questions that we wouldn't normally be able to with just viewing the raw data.
+
+To showcase ggplot2, we will be taking this data set (ramen), and using the function to create a few visuals to answer some questions.
+
+1.Which country had the most ramen reviews?
+```{r country}
+#We will use ggplot in order to create a visual to view the reviews by country
+#We can also use ggplot to produce bar charts using geom_bar
+
+ggplot(data = ramen, aes(x = fct_rev(fct_infreq(Country)))) +
+  geom_bar(stat = "count", fill = "Steelblue", width = 0.8) + 
+  labs(title= "Ramen Reviews by Country",
+       x = "Country",
+       y = "# of Reviews") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1)) +
+  theme(axis.text.y = element_text(size = 7)) +
+  coord_flip()
+```
+
+From our visual we can see that Japan has the most ramen reviews, with the US and South Korea coming in 2nd and 3rd, respectively.This was to be expected since ramen is a Japanese dish. Now, let's use ggplot to help us answer another question.
+
+2. Out of all the Japanese brand ramen, what were the top rated brands?
+
+```{r top japanese brands}
+#First we subset for just Japanese Ramen
+ramen_jp <- subset(ramen, Country == "Japan")
+
+#Next, let's put them in order by ratings
+ramen_jp <- ramen_jp %>%
+  arrange(desc(Stars))
+
+
+#Make sure all 5 star ratings are labeled as "5"
+ramen$Stars <- revalue(ramen$Stars, c("5.00"="5") )
+ramen$Stars <- revalue(ramen$Stars, c("5.0"="5") )
+
+#Since there's many 5 star rated  let's subset for only 5 star ratings
+ramen_jp_top <- subset(ramen_jp, Stars == "5")
+ramen_jp_top
+```
+
+```{r top japanese brands ggplot}
+#Now let's plot to see which Japanese brands had the most 5 star reviews
+ggplot(data = ramen_jp_top, aes(x = fct_rev(fct_infreq(Brand)))) +
+  geom_bar(stat = "count", fill = "Steelblue", width = 0.8) + 
+  labs(title= "Top Japanese Ramen Brands",
+       x = "Brand",
+       y = "# of 5 Star Reviews") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1)) +
+  theme(axis.text.y = element_text(size = 7)) +
+  coord_flip()
+```
+
+Nissin seems to be the winner by a long shot, with more than 8x the number of 5-star reviews compared to the second top brand, Sapporo Ichiban. 
+
+## Conclusion
+
+ggplot, which is a function in Tidyverse, is a powerful and versatile tool for building visualizations in R. It's flexible grammar of graphics and wide variety of visualization options makes it very customizable in making high quality plots and charts.
+
+
+# Tidyverse Extended - Anna Moy
+
+Adding additional theme and faceting that could be added to ggplots. 
+
+Which ramen brand in Taiwan has a 5 star rating. 
+```{r plot-extended}
+ramen_taiwan <- ramen %>%
+  filter(Country == "Taiwan" & Stars == 5)
+
+ggplot(ramen_taiwan, aes(Brand, fill = Brand)) +
+  labs(title = "Taiwan 5 Star Rating Brands", 
+       y = "# of Variety in Each Brand",
+      x = "Brand") +
+  theme_dark() +
+  coord_flip()+
+  geom_bar()
+
+```
+
+
+```{r another-plot}
+nissin <- ramen %>%
+  filter(Brand == "Nissin" |Brand == "New Touch")
+
+ggplot(nissin, aes(Style, fill = "red")) +
+   labs(title = "Nissin & New Touch's Ramen Style", 
+       y = "# of Nissin Ramen",
+      x = "Style of Ramen") +
+  geom_bar() +
+   facet_wrap(~Brand)
+```
+
+

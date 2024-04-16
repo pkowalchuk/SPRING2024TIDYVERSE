@@ -1,12 +1,15 @@
 ---
 title: "Tidyverse CREATE"
-author: "Kaylie Evans"
+author: 
+  - "Kaylie Evans"
+  - "Rashad Long"
 date: '`r Sys.Date()`'
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
 ```
 
 ## Introduction
@@ -15,6 +18,7 @@ This project showcases an example of an R Vignette, centered around the powerful
 ## Load Libraries
 ```{r load-libraries}
 library(tidyverse)
+library(ggalt)
 ```
 
 ## Import CSV into R
@@ -203,5 +207,139 @@ ggplot(pivoted_combined_chambers, aes(fill=chamber$chamber, y=value, x=name)) +
 ```{r}
 # Oldest server from either chamber
 congress[which.max(congress$age_years),]$bioname
+```
+
+=======
+### One Continuous Variable and One Discrete Variable with Color Aesthetic
+```{r geom-boxplot-color}
+#boxplots for each congress showing age IQR colored by chamber
+ggplot(congress, aes(x = congress, y = age_years)) + 
+  geom_boxplot(aes(group = congress, fill = chamber))
+```
+
+### Correlation
+
+`ggplot2` can also be used to visualize the correlation between variables. The `geom_point` function can be used to create a scatter plot, and the `geom_smooth` function can be used to add a line of best fit to the plot. 
+
+First we will create a variable that represents which party the member of congress belongs to. We do this by joining the congress data frame with a data frame that contains the party codes. 
+
+
+```{r}
+
+# Read in csv file from github and join on part_code
+party_codes <-
+  read_csv(
+    "https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/party-codes.csv"
+  )
+
+congress <- congress |>
+  inner_join(party_codes, by = c("party_code" = "party_code"))
+
+```
+
+We can now use `ggplot2` to find correlation between age and party_name. 
+
+
+#### Scatterplot
+
+The most frequently used plot for data analysis is undoubtedly the scatterplot. Whenever you want to understand the nature of relationship between two variables, invariably the first choice is the scatterplot.
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_point() +
+  labs(title = "Age vs Party Name", x = "Age", y = "Party Name")
+
+```
+
+Sometimes to better highlight a region of the plot, we can add a encircling shape around the points. 
+
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_point() +
+  geom_encircle(
+    aes(x = age_years, y = party_name),
+    data = congress %>% filter(age_years > 80),
+    color = "red",
+    expand = 0.05,
+    size = 2
+  ) +
+  labs(title = "Age vs Party Name + Encircling", x = "Age", y = "Party Name")
+
+```
+
+
+
+### Counts Chart
+
+We can use counts chart to overcome the problem of data points overlapping.
+
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_count(col = "tomato", show.legend = F) +
+  labs(title = "Age vs Party Name", x = "Age", y = "Party Name")
+
+```
+
+#### Jitter Plot
+
+Loading in new data to demonstrate jitter plot. 
+```{r}
+data("mpg")
+```
+
+```{r}
+
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Jitter Plot", x = "Class", y = "Highway MPG")
+
+```
+
+#### Bubble Chart
+
+If you have a third variable that you want to represent in the plot, you can use a bubble chart. 
+
+```{r}
+
+mpg_select <-
+  mpg[mpg$manufacturer %in% c("audi", "ford", "honda", "hyundai"),]
+
+bubble <- ggplot(mpg_select, aes(displ, cty)) +
+  geom_point() +
+  labs(title = "Bubble Chart", x = "City MPG", y = "Highway MPG")
+
+bubble + geom_point(aes(size = hwy, col = manufacturer)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+```
+
+Sometimes want the values to change over time. You can implement an animated bubble chart by importing the gganimate package. 
+
+```{r}
+
+library(gganimate)
+library(gapminder)
+
+ggplot(gapminder,
+       aes(
+         gdpPercap,
+         lifeExp,
+         size = pop,
+         color = continent,
+         frame = year
+       )) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_color_manual(values = c("red", "blue", "green", "yellow", "purple", "orange")) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(title = "Bubble Chart", x = "GDP per Capita", y = "Life Expectancy") +
+  theme_minimal() +
+  transition_time(year) +
+  ease_aes('linear')
+
 ```
 

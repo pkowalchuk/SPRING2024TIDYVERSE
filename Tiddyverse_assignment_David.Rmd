@@ -1,0 +1,64 @@
+---
+title: "HW10"
+author: "Andrianina David Raharijao"
+date: "2024-03-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(httr)
+library(jsonlite)
+```
+
+```{r tiddyverse package}
+library(dplyr)
+library(ggplot2)
+```
+
+## Web API
+
+First get the data using API:
+
+```{r q1}
+api_url <- "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=XyD2Prjgvsw5Psu7IYBatJGEDtrJnIfw"
+response <- GET(api_url)
+parsed_content <- content(response, "text")
+df <- fromJSON(parsed_content)
+s_df <- df$results
+```
+
+##Dplyr
+
+Filter articles with the word "Trump" in the title
+```{r q2}
+filtered_articles <- s_df %>% 
+  filter(grepl("Trump", title, ignore.case = TRUE))
+```
+
+Arrange articles by publication date
+```{r q3}
+sorted_articles <- s_df %>% 
+  arrange(desc(published_date))
+```
+
+##ggplot2
+
+Bar chart of articles per item type
+```{r q4}
+s_df %>% 
+  count(item_type) %>% 
+  ggplot(aes(x = item_type, y = n)) + 
+  geom_bar(stat = "identity")
+```
+
+Time series graph for articles over time
+```{r q5}
+s_df %>% 
+  mutate(published_date = as.Date(published_date)) %>% 
+  count(published_date) %>% 
+  ggplot(aes(x = published_date, y = n)) + 
+  geom_line()
+```
+
+
