@@ -4,6 +4,10 @@
 
 ## After submitting your commit, add a line to this readme file describing the commit, and a link to your markdown file
 
+-Blessing Anoroh- I created a Vignette for both Dplyr and Ggplot2 and a little forcats in there
+https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidyverseassignment.Rmd
+
+
 -   Anna Moy - I created a Vignette for Dplyr - <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Anna_Moy_CREATE_Tidyverse.Rmd>
 
 -   Amanda Fox - Use jsonlite and tidyr to automate acquiring, cleaning, transforming, and exporting weekly datasets from NYT API for aggregation and data mining, machine learning:
