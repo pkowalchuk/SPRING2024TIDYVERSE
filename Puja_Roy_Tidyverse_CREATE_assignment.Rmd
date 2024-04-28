@@ -1,0 +1,215 @@
+---
+title: "Tidyverse CREATE Assignment"
+author: "Puja Roy"
+date: "3/24/24"
+output: openintro::lab_report
+---
+
+
+### Objective
+
+The purpose of this assignment is to create an Example by using one or more TidyVerse packages, and any dataset from fivethirtyeight.com or Kaggle, to create a programming sample “vignette” that demonstrates how to use one or more of the capabilities of the selected TidyVerse package with the selected dataset.
+
+For this assignment, I selected the coffee shop chain recipes and prices from Kaggle. This dataset contains prices of various coffee drinks from a coffee shop chain in Europe. This is the link to the dataset in Kaggle: https://www.kaggle.com/datasets/deryae0/coffee-shop-chain-recipes-and-prices
+
+### CREATE Vignette
+
+The TidyVerse is a collection of packages designed for data manipulation, visualization, and analysis in R.
+
+```{r load-packages, message=FALSE}
+# Load R packages
+library(tidyverse)
+library(openintro)
+library(ggplot2)
+```
+
+### readr
+
+**readr**
+
+readr is a fast and efficient package for reading rectangular data files (like CSV or TSV) into R data frames. It provides functions to read data quickly while preserving data types and handling various types of messy data.
+
+I loaded the raw data from my github using the read.csv function. 
+
+- read_csv(), read_excel(), read_table(): Read data from various file formats into data frames.
+
+I explored the data by checking if there were any missing or values. I also printed out summary statistics based on the data.
+
+```{r code-chunk-label}
+
+# Import the dataset
+url <- "https://raw.githubusercontent.com/pujaroy280/SPRING2024TIDYVERSE/main/prices.csv"
+df_coffee_prize <- read.csv(url)
+
+```
+
+```{r}
+# Display the first few rows of the dataset
+head(df_coffee_prize)
+
+# Summary statistics
+summary(df_coffee_prize)
+
+```
+
+```{r}
+num_duplicates <- sum(duplicated(df_coffee_prize))
+# Check for duplicates
+duplicates <- df_coffee_prize[duplicated(df_coffee_prize), ]
+print(duplicates)
+```
+
+```{r}
+# Print out the column names
+print(colnames(df_coffee_prize))
+```
+
+### dplyr
+
+**dplyr**
+
+dplyr is a package for data manipulation that provides a set of functions optimized for common data manipulation tasks such as filtering, selecting, mutating, summarizing, and arranging data. It emphasizes a "grammar of data manipulation" approach for easy and intuitive data wrangling.
+
+I removed the last 2 columns using the select function since there weren't any useful info. Then, I removed rows with NA values in any column.
+
+- select(): Select columns based on column names.
+
+```{r}
+# Remove the last two columns
+clean_df_coffee_prize <- df_coffee_prize %>%
+  select(-c(simple, double))
+
+# Remove rows with NA values in any column
+clean_df_coffee_prize <- clean_df_coffee_prize %>%
+  na.omit()
+
+print(clean_df_coffee_prize)
+
+```
+
+Shown below in the code chunk, I computed the average prices for each combination of drink type and size by using the group_by() function. 
+
+- group_by(): Group data by one or more variables.
+
+In R, the group_by() function is part of the dplyr package, which is a core component of the TidyVerse ecosystem. This function is used for grouping data based on one or more variables, allowing for the application of functions to each group separately.
+
+```{r}
+# Compute average prices for each combination of drink type and size
+avg_prices <- clean_df_coffee_prize %>%
+  group_by(drink_type) %>%
+  summarise(
+    avg_price_small = mean(price_small, na.rm = TRUE),
+    avg_price_medium = mean(price_medium, na.rm = TRUE),
+    avg_price_large = mean(price_large, na.rm = TRUE)
+  )
+print(avg_prices)
+```
+
+### ggplot
+
+**ggplot**
+
+To visualize the average prices of each drink type and size based on the average price, I utilized the ggplot library which is a powerful and flexible package for creating static graphics and building complex plots by adding layers and aesthetic mappings.
+
+The ggplot below generates heatmaps to display the average prices of each drink type and size based on the average price.
+
+- ggplot(): Initialize a ggplot object.
+- geom_point(), geom_line(), geom_bar(): Add geometric objects like points, lines, or bars to the plot.
+- aes(): Define aesthetic mappings.
+- labs(): Add titles, labels, and captions to the plot.
+- scale_fill_gradient(), scale_color_manual(): Adjust color scales.
+
+
+```{r}
+# Create heatmap with reversed axes
+ggplot(avg_prices, aes(x = avg_price_small, y = drink_type, fill = avg_price_small)) +
+  geom_tile(color = "darkgrey") +
+  labs(title = "Average Small Coffee Prices by Drink Type", x = "Average Price (Small)", y = "Drink Type", fill = "Average Price") +
+  scale_fill_gradient(low = "darkgrey", high = "brown")
+
+```
+
+```{r}
+# Create heatmap with reversed axes
+ggplot(avg_prices, aes(x = avg_price_medium, y = drink_type, fill = avg_price_medium)) +
+  geom_tile(color = "darkgrey") +
+  labs(title = "Average Medium Coffee Prices by Drink Type", x = "Average Price (Medium)", y = "Drink Type", fill = "Average Price") +
+  scale_fill_gradient(low = "darkgrey", high = "brown")
+```
+
+```{r}
+# Create heatmap with reversed axes
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_large)) +
+  geom_tile(color = "darkgrey") +
+  labs(title = "Average Large Coffee Prices by Drink Type", x = "Average Price (Large)", y = "Drink Type", fill = "Average Price") +
+  scale_fill_gradient(low = "darkgrey", high = "brown")
+```
+
+
+## TidyVerse Extended (Additional)  by Blessing Anoroh
+
+```{r fig.height= 7}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_small)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Large Coffee Prices by Drink Type",
+        x = "avg_price_small", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 90, vjust=0.7)) 
+```
+\
+
+```{r}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_medium)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Medium Coffee Prices by Drink Type",
+        x = "avg_price_medium", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 60, vjust=0.75)) 
+```
+
+\
+
+```{r}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_large)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Large Coffee Prices by Drink Type",
+        x = "avg_price_large", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5)) 
+```
+
+\
+
+```{r, fig.height = 10, fig.width= 20, warning=FALSE }
+barplot(cbind(avg_prices$avg_price_small, avg_prices$avg_price_medium, avg_prices$avg_price_large) ~ avg_prices$drink_type,
+        beside = TRUE,
+        main = "Average Coffee Prices(small,medium,large) by Drink Type Side by Side",
+        xlab = "drink_type",
+        ylab = "average prices",
+        col = c("green", "purple", "blue"),
+        legend.text = c("small","medium","large") ,
+        width=c(35,35,35),
+          las=2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
+

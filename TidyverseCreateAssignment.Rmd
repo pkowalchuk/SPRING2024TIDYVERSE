@@ -1,0 +1,129 @@
+---
+title: "TIDYVERSE Create Lama"
+author: "Chhiring Lama"
+date: "2024-04-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction:
+
+This analysis employs the tidyverse package in R to conduct demographic analysis on the NYPD dataset. The dataset comprises information on criminal incidents, including demographic details of perpetrators and victims. Our aim is to utilize tidyverse functionalities to explore demographic trends, focusing on age groups, genders, and racial backgrounds of individuals involved in these incidents.
+
+# Load entire Tidyverse package
+```{r}
+library(tidyverse)
+```
+
+load data-set from the github which is sourced from the kaggle: https://www.kaggle.com/datasets/debjeetdas/nypd-shooting-incident-data
+
+```{r}
+nypd_url <- "https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/NYPD_Shooting_Incident_Data__Year_To_Date_.csv"
+```
+
+Read csv data using read.csv() function
+
+```{r}
+nypd_df <- read.csv(nypd_url)
+head(nypd_df)
+```
+# Data Cleansing
+
+```{r}
+# Drop rows with missing values in relevant columns
+nypd_clean <- nypd_df %>%
+  filter(!is.na(PERP_AGE_GROUP), !is.na(PERP_SEX), !is.na(PERP_RACE), !is.na(VIC_AGE_GROUP), !is.na(VIC_SEX), !is.na(VIC_RACE))
+head(nypd_clean)
+
+```
+Select only columns those are helpful to make this analysis, and drop all rows with NAs
+
+```{r}
+nypd_clean <- nypd_df %>%
+  select(PERP_AGE_GROUP, PERP_SEX, PERP_RACE, VIC_AGE_GROUP, VIC_SEX, VIC_RACE, STATISTICAL_MURDER_FLAG) %>%
+  filter(!is.na(PERP_AGE_GROUP), !is.na(PERP_SEX), !is.na(PERP_RACE), !is.na(VIC_AGE_GROUP), !is.na(VIC_SEX), !is.na(VIC_RACE))
+```
+
+# Explore Age Groups
+
+```{r}
+
+perp_age_distribution <- nypd_clean %>%
+  count(PERP_AGE_GROUP) %>%
+  arrange(PERP_AGE_GROUP)
+
+vic_age_distribution <- nypd_clean %>%
+  count(VIC_AGE_GROUP) %>%
+  arrange(VIC_AGE_GROUP)
+```
+
+# Visualize Age Groups
+
+perpetrator age group
+```{r}
+
+ggplot(perp_age_distribution, aes(x = PERP_AGE_GROUP, y = n)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Perpetrator Age Distribution", x = "Age Group", y = "Frequency")
+```
+
+
+Victim age group
+```{r}
+ggplot(vic_age_distribution, aes(x = VIC_AGE_GROUP, y = n)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Victim Age Distribution", x = "Age Group", y = "Frequency")
+```
+(FA) Trying to see which age group attacked which age group the most, or in other words: the frequency of incidents involving various combinations of perpetrator and victim age groups, highlighting which age groups are more commonly involved in incidents with each other.
+```{r}
+library(dplyr)
+library(ggplot2)
+
+# a table counting incidents by perpetrator and victim age group
+age_group_combinations <- nypd_clean %>%
+  count(PERP_AGE_GROUP, VIC_AGE_GROUP)
+
+# heat map
+ggplot(age_group_combinations, aes(x = PERP_AGE_GROUP, y = VIC_AGE_GROUP, fill = n)) +
+  geom_tile() + # This creates the heatmap tiles
+  scale_fill_gradient(low = "white", high = "red") + # Adjust colors as needed
+  theme_minimal() + # Clean theme
+  labs(x = "Perpetrator Age Group",
+       y = "Victim Age Group",
+       fill = "Incidents",
+       title = "Heatmap of Shooting Incidents by Age Group",
+       caption = "Data Source: NYPD") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+(FA) Now looking at the proportion of murders stratified by both the perpetrator's and victim's sexes:
+```{r}
+murder_proportions <- nypd_clean %>%
+  group_by(PERP_SEX, VIC_SEX, STATISTICAL_MURDER_FLAG) %>%
+  summarise(Incidents = n(), .groups = 'drop') %>%
+  ungroup() %>%
+  group_by(PERP_SEX, VIC_SEX) %>%
+  mutate(Total = sum(Incidents),
+         Proportion = Incidents / Total) %>%
+  ungroup() %>%
+  filter(STATISTICAL_MURDER_FLAG == "Y") %>%
+  select(PERP_SEX, VIC_SEX, Proportion)
+
+ggplot(murder_proportions, aes(x = PERP_SEX, y = Proportion, fill = VIC_SEX)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  labs(title = "Proportion of Incidents Classified as Murders",
+       subtitle = "By Perpetrator and Victim Sex",
+       x = "Perpetrator Sex",
+       y = "Proportion (%)",
+       fill = "Victim Sex") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(size = 14, face = "bold"),
+        legend.title = element_text(size = 12),
+        legend.text = element_text(size = 10))
+```
+(FA) It is interesting that most murders committed by females were against males, while murders committed by males were just about 50-50. This may be due to a variety of reasons that would require more detailed variables to be acquired and added to understand.
