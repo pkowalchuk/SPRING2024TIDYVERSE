@@ -1,0 +1,211 @@
+---
+title: "Tidyverse Extend"
+author: "Ursula Podosenin, extended by Kaylie Evans"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## CREATE
+
+### Ursula Podosenin: Filter, Group and Mutate Vignette
+
+```{r create-load-libaries}
+
+# Loading the packages used in this file
+
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r create-load-data}
+
+# Obtaining the url file, converting it into a data frame, and getting an overview of the table 
+url<- "https://raw.githubusercontent.com/ursulapodosenin/DAT-607/main/osteoporosis.csv"
+
+raw_data<-read.csv(url(url))
+raw_data<- data.frame(raw_data)
+dplyr::glimpse(raw_data)
+sum(is.na(raw_data))
+```
+
+```{r create-mutate-group-summarise-filter}
+# Adding a column to raw data that pulls out people over 50 with osteoporosis and potential risk factors
+raw_data<- raw_data |>
+  mutate(Osteoporosis.And.Over.50= Age>49 & Osteoporosis== "1")
+
+raw_data<- raw_data |> 
+  mutate(Risk_Factors = ifelse(raw_data$Calcium.Intake == "Low" | Family.History == "Yes" | Medical.Conditions != "None" | Prior.Fractures== "Yes" , "yes", "no"))
+
+# Filtering the number of people with Osteoporosis by ethnicity, activity level and hormonal changes
+raw_data |>
+  group_by(Race.Ethnicity)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+raw_data |>
+  group_by(Physical.Activity)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+raw_data |>
+  group_by(Gender, Hormonal.Changes)|>
+  summarise(total_with_osteoperosis= sum(Osteoporosis==1))
+
+# Filtering by some general conditions to see if there are any suggestive variables that may be linked to Osteoporosis
+raw_data |> 
+  filter(Age>49 & Hormonal.Changes== "Normal" & Family.History=="No" & Body.Weight== "Normal" & Calcium.Intake== "Adequate", Osteoporosis==1)
+
+raw_data |> 
+  filter(Age>49 & Hormonal.Changes== "Normal" & Family.History=="No" & Body.Weight== "Normal" & Calcium.Intake== "Adequate", Osteoporosis==0)
+
+```
+
+```{r create-ggplot}
+
+# Looking at the number of people with medical conditions and those on medication
+
+ggplot(data= raw_data, aes(x= Medical.Conditions))+
+  geom_bar(
+  fill= "blue")+
+  theme_bw()
+
+ggplot(data= raw_data, aes(x= Medications))+
+  geom_bar(
+  fill= "green")+
+  theme_bw()
+
+```
+
+## EXTEND
+
+### Kaylie Evans: Filter, Group and Mutate Vignette Extension
+
+Necessary libraries are loaded above in the CREATE section
+
+*tidyverse, dplyr, ggplot2*
+
+In the above vignette, the functions *mutate(), group_by(), summarise()*, and *filter()* are used. More analysis and explanations can be done on these 4 functions. This will be explored below using a new data set, *Top Anime Dataset 2024* from Kaggle user BHAVYA DHINGRA.
+
+##### Import the new data set
+```{r extend-import-raw-ani-data}
+#reading in the data set to an object named after the anime data set (ani_raw)
+ani_raw <- read.csv("https://raw.githubusercontent.com/evanskaylie/DATA607/main/Top_Anime_data.csv", sep = ',')
+
+#save raw data as a new data frame to make future changes and avoid overwriting the csv input
+ani_data <- ani_raw
+
+#preview data
+glimpse(ani_data)
+```
+
+#### Summarise function
+In the above CREATE vignette, the summarise function is fed specific groups to summarise certain columns on, providing an output that *sums* rows. Below, the summarise function is used to calculate an average, rather than a sum:
+```{r extend-summarise-mean}
+#calculate the average score of all the rows and the number of rows
+ani_data |>
+  summarise(mean = mean(Score), n = n())
+```
+##### Reframe() as an extension/ substitute of summarise()
+To return multiple rows per group, use reframe() instead of summarise()
+```{r extend-reeframe}
+#calculate the average score of all the rows and the number of rows
+ani_data |>
+   reframe(quantile_score = quantile(Score, c(0.25, 0.75)), prob_of_score = c(0.25, 0.75))
+```
+
+#### Using Functions for Cleaning
+##### Filter
+To begin to clean a data set, filter can be a great tool. The *Top Anime Dataset 2024* needs further cleaning as the **,** delimiter exists within columns, causing inconsistent delimiting.
+
+Looking at the data, there should only be 5 options under the column Type: TV, TV Special, OVA, ONA and Movie. Below, there will be 4 filtered subsets of the data that find where the TV or movie observation was found. In a full cleaning, all columns would be included in this.
+```{r extend-filter}
+#TV, TV Special, OVA, ONA and Movie are in type
+ani_type <- ani_data |> 
+  filter(
+    Type == "TV" | Type == "TV Special" | Type == "OVA" | Type == "ONA" | Type == "Movie"
+    )
+
+#TV, TV Special, OVA, ONA and Movie are in eps
+ani_eps <- ani_data |> 
+  filter(
+    Eps == "TV" | Eps == "TV Special" | Eps == "OVA" | Eps == "ONA" | Eps == "Movie"
+    )
+
+#TV, TV Special, OVA, ONA and Movie are in status
+ani_status <- ani_data |> 
+  filter(
+    Status == "TV" | Status == "TV Special" | Status == "OVA" | Status == "ONA" | Status == "Movie"
+    )
+
+#TV, TV Special, OVA, ONA and Movie are in aired
+ani_aired <- ani_data |> 
+  filter(
+    Aired == "TV" | Aired == "TV Special" | Aired == "OVA" | Aired == "ONA" | Aired == "Movie"
+    )
+```
+
+After getting the filtered subsets, it is time to decide what to do with the columns that push the Type data past the Type column. The mutate function and drop can be used. This is an example of what that would look like with one of the subsets.
+##### Dropping columns with Mutate() for cleaning
+```{r extend-mutate-drop}
+#Aired is 3 column to the right of Type, so Type, Eps, Status columns to be dropped
+ani_aired <- ani_aired |>
+  mutate(
+    Type = NA,
+    Eps = NA,
+    Status = NA
+  )
+```
+
+##### Renaming columns with mutate() for cleaning
+Now, ani_type, ani_eps, ani_status, and ani_aired all have the Type data in the 8th field; however, the fields may have the incorrect name. Many functions can move the columns over. Below, mutate() is used to help with this! 
+
+*Note:* _For the demonstrative purpose of this vignette, this and the previous 3 steps are separated. They can, however, be done in a single instance of mutate()._
+```{r extend-mutate-rename}
+#keep only to Status column
+ani_type <- ani_type[, 1:12]
+
+#rename and keep only to Status column
+ani_eps <- ani_eps |>
+  mutate(
+    Type = Eps,
+    Eps = Status,
+    Status = Aired,
+    Aired = Premiered
+  )
+ani_eps <- ani_eps[, 1:12]
+
+#rename and keep only to Status column
+ani_status <- ani_status |>
+  mutate(
+    Type = Status,
+    Eps = Aired,
+    Status = Premiered,
+    Aired = Broadcast
+  )
+ani_status <- ani_status[, 1:12]
+
+#rename and keep only to Status column
+ani_aired <- ani_aired |>
+  mutate(
+    Type = Aired,
+    Eps = Premiered,
+    Status = Broadcast,
+    Aired = Producers
+  )
+ani_aired <- ani_aired[, 1:12]
+```
+
+#### Rbind, another useful function
+After these samples of cleaning, the subsets can be put back together with rbind(). Rbind() is a useful function that can stick subsets of data back together into a single data frame. They must have identical numbers of columns and column names.
+```{r extend-rbind}
+ani_semi_clean <- rbind(ani_type, ani_eps, ani_status, ani_aired)
+
+glimpse(ani_semi_clean)
+```
+
+
+### Conclusion
+The above EXTEND vignette takes what the original CREATE vignette analyses and adds further detail and a few useful related functions with a focus on data cleaning. In summary, mutate(), group_by(), summarise(), filter(), rbind(), column dropping, and subsetting data are all shown in the extension vignette above. The above are simply examples on how one can use the functions, not necessarily the quickest way to clean a data set. There are an infinite amount of possibilities when it comes to data transformation and these tools can be quite useful in that process.
