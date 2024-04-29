@@ -55,3 +55,5 @@ https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidy
 - Amanda Fox: I extended Anna Moy's vignette about dplyr and ggplot with an example using several additional functions from each of these packages
 
 - Anna Moy - I extended Natalie Kalukeerthie's vignette with additional examples of additional items that can be added to the ggplot. 
+
+- Natalie Kalukeerthie - I extended Kalie Evans' vignette with demonstrations using the dplyr package on the included data set.
