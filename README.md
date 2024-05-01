@@ -57,3 +57,5 @@ https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidy
 - Anna Moy - I extended Natalie Kalukeerthie's vignette with additional examples of additional items that can be added to the ggplot. 
 
 - Natalie Kalukeerthie - I extended Kaylie Evans' vignette with demonstrations using the dplyr package on the included data set.
+
+- Atta Boateng - I extende Blessing's vignette to include lm function for correlation between income and city
