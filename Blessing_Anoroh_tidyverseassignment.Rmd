@@ -177,3 +177,8 @@ ggplot(data = top_5_stdev, aes(x = City, y = Stdev, fill = State_ab)) +
 \
 \
 
+This is very interesting. I wonder if there there is a strong correlation between the state and the average income. Base on that,
+maybe a residual be can determined using the lm function
+
+lm(income ~ City)
+
