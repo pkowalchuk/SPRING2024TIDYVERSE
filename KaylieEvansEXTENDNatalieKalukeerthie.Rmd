@@ -281,7 +281,53 @@ ggplot(gapminder,
 
 ```
 
+## Dplyr package
 
+I would like to extend this assignment with a demonstration of the Dyplr package on the congress dataset. The Dplyr package is one of the most useful parts of the tidyverse library. Dplyr is a grammar of data manipulation that provides a consistent set of verbs that help you solve the most common data manipulation challenges. For this example, we will look a few select functions: rename(), select(), distinct(), group_by(), arrange(), summarise(). The dplyr provides the pipe %>% operator, so the result from one step is then “piped” into the next step df %>% f(y).
+
+### Rename()
+
+Rename() changes the names of individual variables using new_name = old_name syntax. Here we will rename "bioname" and "bioguide_id" to keep the naming convention consistent with the other columns.
+
+```{r}
+congress_rename <- congress %>%
+  rename("bio_name" = "bioname",
+         "bio_guide_id" = "bioguide_id")
+```
+
+### Select(), Distinct()
+
+The select function changes whether or not a column is included in case we need only several columns instead of the entire data frame, and the distinct function can be use in tandem to parse only unique/distinct rows from a data frame. We will use these functions to find the unique list of names.
+
+```{r}
+bio_name <- congress_rename %>% 
+  select(bio_name) %>% distinct()
+
+head(bio_name)
+```
+
+### Group_by(), Arrange(), Summarise()
+
+*Group_by()* takes an existing tbl and converts it into a grouped data frame/tibble where operations are performed “by group”. 
+
+*Arrange()* changes the order of the rows by the values of selected columns. 
+
+*Summarise()* collapses a group into a single row, it will have one (or more) rows for each combination of grouping variables.
+
+Using these three Dplyr functions, we will group the congress dataset by bio_name, then summarize by age_years to find the average age of each congress member during their term. Finally, we will arrange the average ages in descending order to see who is the oldest.
+
+```{r}
+congress_rename %>%
+  group_by(bio_name) %>%
+  summarize(age_years_average = mean(age_years,na.rm=TRUE)) %>%
+  arrange(desc(age_years_average))
+```
+
+We can see that Andrew Jackson Houston is the oldest member at 86.5 years old.
+
+## Conclusion
+
+In this EXTEND assignment, we delved into some of the functions Dplyr has to offer, such as rename(), select(), distinct(), group_by(), arrange() and summarize(). Dyplyr is a very resourceful tool in the Tidyverse package that can help users perform the needed data transformations for their analysis.
 
 
 

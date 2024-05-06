@@ -146,6 +146,57 @@ ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_lar
 ```
 
 
+## TidyVerse Extended (Additional)  by Blessing Anoroh
+
+```{r fig.height= 7}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_small)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Large Coffee Prices by Drink Type",
+        x = "avg_price_small", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 90, vjust=0.7)) 
+```
+\
+
+```{r}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_medium)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Medium Coffee Prices by Drink Type",
+        x = "avg_price_medium", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 60, vjust=0.75)) 
+```
+
+\
+
+```{r}
+ggplot(avg_prices, aes(x = avg_price_large, y = drink_type, fill = avg_price_large)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Average Large Coffee Prices by Drink Type",
+        x = "avg_price_large", y = "drink_type)") +
+  coord_flip( )+
+  theme(axis.text.x = element_text(angle = 45, vjust=0.5)) 
+```
+
+\
+
+```{r, fig.height = 10, fig.width= 20, warning=FALSE }
+barplot(cbind(avg_prices$avg_price_small, avg_prices$avg_price_medium, avg_prices$avg_price_large) ~ avg_prices$drink_type,
+        beside = TRUE,
+        main = "Average Coffee Prices(small,medium,large) by Drink Type Side by Side",
+        xlab = "drink_type",
+        ylab = "average prices",
+        col = c("green", "purple", "blue"),
+        legend.text = c("small","medium","large") ,
+        width=c(35,35,35),
+          las=2)
+```
+
+
+
+
+
+
 
 
 
