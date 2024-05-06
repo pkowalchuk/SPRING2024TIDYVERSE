@@ -102,33 +102,30 @@ glimpse(flightReviewData)
 
 Some potential analysis includes seeing which airlines have the highest overall rating, seeing if the average rating is higher for direct flights or layover flights, examining if certain months have higher average ratings, examining if certain types of travelers give higher ratings and whether that holds for direct or non-direct flights, etc.
 
+```{r stringr kdd}
 
-##Additional code by Andrianina David Raharijao:
+#length of each review can be found using stringr.  
 
-Hello, I will be adding some code to make some visualization using ggplot2
+reviewlengthdf <- as.data.frame(str_length(flightReviewData$Reviews))
+head(reviewlengthdf)
 
-```{r package_load}
-library(ggplot2)
-```
+#combining strings can be done with str_c if the strings are listed
 
-Bar chart to visualize the number of flights reviewed per airline
+a <- 'some text'
+b <- 'more text'
+c <- str_c(a,b)
+view(c)
 
-```{r bar1}
-ggplot(flightReviewData, aes(x = Airline)) +
-  geom_bar() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(title = "Number of Flight Reviews per Airline",
-       x = "Airline",
-       y = "Count of Reviews")
-```
+#to combine strings together in a dataframe str_flatten can be used
 
-Box plot looking at the distribution of overall ratings by class.
+#selecting the reviews for Singapore Airlines
+singaporedf <- flightReviewData %>%
+  filter(Airline == 'Singapore Airlines') 
 
-```{r bar2}
-ggplot(flightReviewData, aes(x = Class, y = Overall.Rating)) +
-  geom_boxplot() +
-  labs(title = "Distribution of Overall Ratings by Class",
-       x = "Class",
-       y = "Overall Rating")
+
+#combine all reviews into a single string separated by a comma
+all_singapore_review <- str_flatten(singaporedf[,6], ',')
+view(all_singapore_review)
+
 ```
 
