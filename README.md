@@ -57,3 +57,5 @@ https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidy
 - Anna Moy - I extended Natalie Kalukeerthie's vignette with additional examples of additional items that can be added to the ggplot. 
 
 - Natalie Kalukeerthie - I extended Kaylie Evans' vignette with demonstrations using the dplyr package on the included data set.
+  
+- Keith DeNivo:  I extended Semyon Toybis stringr vignette to include (str_c,str_flatten,str_length) https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/a30fde3dd054483ff555667027027cf2389349d0/tidyverse_create_semyon_toybiskdd%20mod.Rmd
