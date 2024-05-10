@@ -1,0 +1,184 @@
+---
+title: "TidyVerse Assignment"
+author: "Blessing Anoroh"
+date: "March 27,2024"
+output: html_document
+---
+
+## Load Package
+
+```{r}
+library(tidyverse)
+```
+
+## Take a look at the raw dataframe
+
+```{r setup}
+income <- read.csv("/Users/blessinga/Downloads/archive (12)/kaggle_income.csv")
+
+glimpse(income)
+```
+
+\
+
+## Clean the dataframe 
+
+**Using dplyr we are removing unnecessary columns and removing any rows with 0 values**
+
+```{r}
+#cleaning the raw data using dplyr
+
+#removing unnecessary columns
+sorted_inc <-subset(income, select = -c(1:2,9:15,19))
+
+#removing any rows with 0 in the new dataframe and calling the dataframe sorted_inc2
+sorted_inc2 <- sorted_inc[apply(sorted_inc!=0, 1, all),]
+
+
+view(sorted_inc2)
+```
+
+\
+
+**Using dplyr we are filtering the new data frame, "sorted_inc" by CITY and plotting it using ggplot2.**
+
+
+```{r fig.height=10}
+inc_city <- dplyr::filter(sorted_inc2, Type=="City")
+
+Mean1 <-inc_city$Mean/1000
+
+ggplot(data = inc_city, aes(x = State_Name, y = Mean1, fill = State_ab)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "2017 Household Income Mean Based on Cities in States (in thousands)",
+        x = "Sates", y = "Mean (Income)") +
+  coord_flip( )
+```
+
+**What we can gather from this is that based on City Type the top 5 mean household income are : Texas, California, Minnesota, Iowa, and Kansas from the data frame**
+
+\
+
+
+##Analysis Part 2 -
+
+\
+
+**Here in this analysis is dplyr and ggplot2**
+
+```{r fig.height=10}
+#using dplyr to group by , summarize, and mutate
+
+ssort <- sorted_inc2 %>%
+  group_by(State_Name) %>%
+  summarize(Mean = n()) %>%
+  # Sort by total
+  arrange(desc(Mean)) %>%
+  # Make the category column ordered
+  mutate(State_Name = fct_inorder(State_Name))
+
+#plot using ggplot
+ggplot(ssort,
+       aes(y = fct_rev(State_Name), x = Mean, fill = State_Name)) +
+  geom_col(stat = "identity")  + 
+  scale_x_continuous() +
+  labs(y = NULL, x = "Household Income Mean (total) ")
+
+	
+
+ggplot(data = ssort, aes ( x = Mean, y = State_Name))+ geom_point() 
+
+```
+ 
+ **Based off this you can see top 5 states with Highest Mean Household income are California, Texas, New York, Florida, and Pennsylvania. I am not surprised too much by this because these are well popular states amongst the 50 states. Also where wages are higher as well as cost of living. **  
+ 
+\
+
+## Analysis Part 3
+
+\
+ 
+ **Now here using the untouched summarize data you will see the mean and median, also adjusted in different ways**
+
+**1ST is The household income by Mean unordered. top 5 Highest mean income states are California, Texas, New York, Florida, and Pennsylvania. Similar to the first part. **
+
+\
+
+```{r plot-wider, fig.width=8, fig.height=10}
+
+Mean2 <-sorted_inc2$Mean/10000
+
+ggplot(data = sorted_inc2, aes(x = State_Name, y = Mean2, fill = State_ab)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "2017 Household Income Mean by States (in thousands)",
+        x = "Sates", y = "Mean (Income)") +
+  coord_flip( )+
+  theme(axis.text.y = element_text(angle = 45, vjust=0.5)) 
+
+ggplot(data = sorted_inc2, aes ( x = Mean, y = State_Name))+ geom_point() 
+```
+
+**2nd part is The household income by Median unordered. top 5 Highest median income states are California, Texas, New York, Florida, and Pennsylvania. Similar to the first with city mean and 2nd part. **
+
+
+```{r, fig.width=10}
+
+Median1 <- sorted_inc2$Median/10000
+  
+ggplot(data = sorted_inc2, aes(x = reorder(State_Name, -Median), 
+                           y = Median1, fill = State_ab) )+ 
+   geom_bar(stat = "identity") + 
+   labs(title = "2017 Household Income Median by States (in thousands)",
+        x = "States", y = "Median (Income) States") +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+\
+
+## Analysis Part 4
+
+**In this one we will be using dplyr to find top 5 standard deviations and its variables and then plot. We will be plotting based on the State and City**
+
+\
+
+```{r}
+top_5_stdev <- top_n(sorted_inc2,5,Stdev)
+
+print(top_5_stdev)
+
+stdev1 <- top_5_stdev$Stdev/1000
+
+ggplot(data = top_5_stdev, aes(x = "", y = stdev1, fill = City)) + 
+  geom_bar(stat = "identity") + 
+  labs(title = "Cities with  highest Household income based on Standard Deviation in 2017 (in thousands)") +
+  coord_polar("y") +
+  theme_void()
+ 
+```
+
+**Well they all look pretty much the same on the pie chart but we know they are not, lets do a bar chart instead.**
+
+
+\
+\
+```{r}
+ggplot(data = top_5_stdev, aes(x = City, y = Stdev, fill = State_ab)) +
+   geom_bar(stat = "identity") +   
+  labs(title = "Top 5 Household Income Stdev by City (in thousands)",
+        x = "Sates", y = "Standard Deviation (Income)") +
+  coord_flip( )+
+  theme(axis.text.y = element_text(angle = 45, vjust=0.5)) 
+```
+\
+
+**Well using State ab to determine which city is in what State, from this we can gather Miami which is in Florida have the highest standard deviation household income in 2017 amongst the vast majority.**
+
+\
+\
+
+This is very interesting. I wonder if there there is a strong correlation between the state and the average income. Base on that,
+maybe a residual be can determined using the lm function
+
+lm(income ~ City)
+

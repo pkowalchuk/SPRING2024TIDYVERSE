@@ -1,0 +1,334 @@
+---
+title: "Tidyverse CREATE"
+author: 
+  - "Kaylie Evans"
+  - "Rashad Long"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+```
+
+## Introduction
+This project showcases an example of an R Vignette, centered around the powerful visualization capabilities of the ggplot2 package. In this RMD, a dataset sourced from FiveThirtyEight is used, specifically focusing on the age distribution within the U.S. Congress (https://fivethirtyeight.com/features/aging-congress-boomers/). The goal is to demonstrate how to effectively utilize ggplot2, a part of the TidyVerse ecosystem, to create insightful and visually appealing plots from this dataset.
+
+## Load Libraries
+```{r load-libraries}
+library(tidyverse)
+library(ggalt)
+```
+
+## Import CSV into R
+```{r import-data}
+congress <- read_csv("https://raw.githubusercontent.com/fivethirtyeight/data/master/congress-demographics/data_aging_congress.csv")
+
+glimpse(congress)
+```
+
+## Essential and Optional Components
+
+The grammar of graphics is the integral of ggplot2. The structure of it takes in data, a coordinate system, and specifies a geom. Depending on the geom, an x and/or y may need to be specified. These are specified in the aes function. 
+
+### Aes values: Example for Histograms
+
+The following are required aesthetics for a histogram: 
+
+- mapping, which is the aes(x = n)
+
+- data, the data set name to be used in the graph
+
+
+The following are optional aesthetics, followed by their default values:
+
+- stat, default value is "bin"
+
+- position, default value is "stack"
+
+- binwidth, default value is relative to the data set inputs
+
+- bins, default value is 30
+
+- na.rm, default value is FALSE
+
+- orientation, default value is NA
+
+- show.legend, default value is NA
+
+- inherit.aes, default value is TRUE
+
+- aes, the aesthetic field has the ability to contain more aesthetic specifications such as color and shapes in other geoms - default values are null for these additional mappings
+
+### Aes Values Examples with Histograms:
+```{r geom-hist-aes}
+#histogram of age
+ggplot(congress, aes(x = age_years)) + 
+  geom_histogram()
+
+#histogram of age with bin number specified
+ggplot(congress, aes(x = age_years)) + 
+  geom_histogram(bins = 60)
+
+#histogram of age with binwidth specified
+ggplot(congress, aes(x = age_years)) + 
+  geom_histogram(binwidth = 4)
+
+#histogram of age with bins and colored by generation
+ggplot(congress, aes(x = age_years)) + 
+  geom_histogram(aes(fill = generation), bins = 20)
+
+```
+
+
+## Examples of Graphs for Different Variable Types
+The below chunks explore different combinations of variable types in ggplot2. The types explored are as follows:
+
+1 Variable:
+
+Continuous = geom_histogram
+
+Discrete = geom_bar
+
+
+2 Variables: 
+
+Both Continuous = geom_point
+
+1 Continuous, 1 Discrete = geom_boxplot
+
+
+### One Continuous Variable
+```{r geom-hist}
+#birthday at start of term histogram
+ggplot(congress, aes(x = birthday)) + 
+  geom_histogram(bins = 60)
+```
+
+### One Continuous Variable with Color Aesthetic 
+```{r geom-hist-color}
+#age histogram colored by generation
+ggplot(congress, aes(x = age_years)) + 
+  geom_histogram(aes(fill = generation), bins = 60)
+```
+
+### One Discrete Variable  
+```{r geom-bar}
+#bar chart of generation frequency
+ggplot(congress, aes(x = generation)) + 
+  geom_bar()
+```
+
+### One Discrete Variable with Color Aesthetic 
+```{r geom-bar-color}
+#bar chart of generation frequency colored by chamber
+ggplot(congress, aes(x = generation)) + 
+  geom_bar(aes(fill = chamber))
+```
+
+### Two Continuous Variables 
+```{r geom-point}
+#scatter plot of start date and birthday
+ggplot(congress, aes(x = start_date, y = birthday)) + 
+  geom_point()
+```
+
+### Two Continuous Variables with Color Aesthetic 
+```{r geom-point-color}
+#scatter plot of start date and birthday with color for age to highlight age change over time
+ggplot(congress, aes(x = start_date, y = birthday)) + 
+  geom_point(aes(color = age_years))
+```
+
+### One Continuous Variable and One Discrete Variable
+```{r geom-boxplot}
+#boxplots for each congress showing age IQR
+ggplot(congress, aes(x = congress, y = age_years)) + 
+  geom_boxplot(aes(group = congress))
+```
+
+### One Continuous Variable and One Discrete Variable with Color Aesthetic
+```{r geom-boxplot-color}
+#boxplots for each congress showing age IQR colored by chamber
+ggplot(congress, aes(x = congress, y = age_years)) + 
+  geom_boxplot(aes(group = congress, fill = chamber))
+```
+
+### Correlation
+
+`ggplot2` can also be used to visualize the correlation between variables. The `geom_point` function can be used to create a scatter plot, and the `geom_smooth` function can be used to add a line of best fit to the plot. 
+
+First we will create a variable that represents which party the member of congress belongs to. We do this by joining the congress data frame with a data frame that contains the party codes. 
+
+
+```{r}
+
+# Read in csv file from github and join on part_code
+party_codes <-
+  read_csv(
+    "https://raw.githubusercontent.com/pkowalchuk/SPRING2024TIDYVERSE/main/party-codes.csv"
+  )
+
+congress <- congress |>
+  inner_join(party_codes, by = c("party_code" = "party_code"))
+
+```
+
+We can now use `ggplot2` to find correlation between age and party_name. 
+
+
+#### Scatterplot
+
+The most frequently used plot for data analysis is undoubtedly the scatterplot. Whenever you want to understand the nature of relationship between two variables, invariably the first choice is the scatterplot.
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_point() +
+  labs(title = "Age vs Party Name", x = "Age", y = "Party Name")
+
+```
+
+Sometimes to better highlight a region of the plot, we can add a encircling shape around the points. 
+
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_point() +
+  geom_encircle(
+    aes(x = age_years, y = party_name),
+    data = congress %>% filter(age_years > 80),
+    color = "red",
+    expand = 0.05,
+    size = 2
+  ) +
+  labs(title = "Age vs Party Name + Encircling", x = "Age", y = "Party Name")
+
+```
+
+
+
+### Counts Chart
+
+We can use counts chart to overcome the problem of data points overlapping.
+
+```{r}
+
+ggplot(congress, aes(x = age_years, y = party_name)) +
+  geom_count(col = "tomato", show.legend = F) +
+  labs(title = "Age vs Party Name", x = "Age", y = "Party Name")
+
+```
+
+#### Jitter Plot
+
+Loading in new data to demonstrate jitter plot. 
+```{r}
+data("mpg")
+```
+
+```{r}
+
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Jitter Plot", x = "Class", y = "Highway MPG")
+
+```
+
+#### Bubble Chart
+
+If you have a third variable that you want to represent in the plot, you can use a bubble chart. 
+
+```{r}
+
+mpg_select <-
+  mpg[mpg$manufacturer %in% c("audi", "ford", "honda", "hyundai"),]
+
+bubble <- ggplot(mpg_select, aes(displ, cty)) +
+  geom_point() +
+  labs(title = "Bubble Chart", x = "City MPG", y = "Highway MPG")
+
+bubble + geom_point(aes(size = hwy, col = manufacturer)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal()
+
+```
+
+Sometimes want the values to change over time. You can implement an animated bubble chart by importing the gganimate package. 
+
+```{r}
+
+library(gganimate)
+library(gapminder)
+
+ggplot(gapminder,
+       aes(
+         gdpPercap,
+         lifeExp,
+         size = pop,
+         color = continent,
+         frame = year
+       )) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_color_manual(values = c("red", "blue", "green", "yellow", "purple", "orange")) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(title = "Bubble Chart", x = "GDP per Capita", y = "Life Expectancy") +
+  theme_minimal() +
+  transition_time(year) +
+  ease_aes('linear')
+
+```
+
+## Dplyr package
+
+I would like to extend this assignment with a demonstration of the Dyplr package on the congress dataset. The Dplyr package is one of the most useful parts of the tidyverse library. Dplyr is a grammar of data manipulation that provides a consistent set of verbs that help you solve the most common data manipulation challenges. For this example, we will look a few select functions: rename(), select(), distinct(), group_by(), arrange(), summarise(). The dplyr provides the pipe %>% operator, so the result from one step is then “piped” into the next step df %>% f(y).
+
+### Rename()
+
+Rename() changes the names of individual variables using new_name = old_name syntax. Here we will rename "bioname" and "bioguide_id" to keep the naming convention consistent with the other columns.
+
+```{r}
+congress_rename <- congress %>%
+  rename("bio_name" = "bioname",
+         "bio_guide_id" = "bioguide_id")
+```
+
+### Select(), Distinct()
+
+The select function changes whether or not a column is included in case we need only several columns instead of the entire data frame, and the distinct function can be use in tandem to parse only unique/distinct rows from a data frame. We will use these functions to find the unique list of names.
+
+```{r}
+bio_name <- congress_rename %>% 
+  select(bio_name) %>% distinct()
+
+head(bio_name)
+```
+
+### Group_by(), Arrange(), Summarise()
+
+*Group_by()* takes an existing tbl and converts it into a grouped data frame/tibble where operations are performed “by group”. 
+
+*Arrange()* changes the order of the rows by the values of selected columns. 
+
+*Summarise()* collapses a group into a single row, it will have one (or more) rows for each combination of grouping variables.
+
+Using these three Dplyr functions, we will group the congress dataset by bio_name, then summarize by age_years to find the average age of each congress member during their term. Finally, we will arrange the average ages in descending order to see who is the oldest.
+
+```{r}
+congress_rename %>%
+  group_by(bio_name) %>%
+  summarize(age_years_average = mean(age_years,na.rm=TRUE)) %>%
+  arrange(desc(age_years_average))
+```
+
+We can see that Andrew Jackson Houston is the oldest member at 86.5 years old.
+
+## Conclusion
+
+In this EXTEND assignment, we delved into some of the functions Dplyr has to offer, such as rename(), select(), distinct(), group_by(), arrange() and summarize(). Dyplyr is a very resourceful tool in the Tidyverse package that can help users perform the needed data transformations for their analysis.
+
+
+
+

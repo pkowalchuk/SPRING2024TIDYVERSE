@@ -4,6 +4,10 @@
 
 ## After submitting your commit, add a line to this readme file describing the commit, and a link to your markdown file
 
+-Blessing Anoroh- I created a Vignette for both Dplyr and Ggplot2 and a little forcats in there
+https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidyverseassignment.Rmd
+
+
 -   Anna Moy - I created a Vignette for Dplyr - <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Anna_Moy_CREATE_Tidyverse.Rmd>
 
 -   Amanda Fox - Use jsonlite and tidyr to automate acquiring, cleaning, transforming, and exporting weekly datasets from NYT API for aggregation and data mining, machine learning:
@@ -15,6 +19,7 @@
 -   Semyon Toybis - I created a vignette that uses the mutate function and stringr package from the TIDYVERSE to extract data from airline flight reviews, allowing for further analysis: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/tidyverse_create_semyon_toybis.Rmd>
 
 -   Ursula Podosenin - I created a vignette that focuses on the filter, group and mutate functions: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyVerse_Part_One.Rmd>
+    -   Kaylie Evans - Extended Ursala's vignette: further analysis on cleaning with filter, group, mutate, and summarise and additional information on rbind(), subsets, and dropping columns. <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansEXTENDUrsulaPodosenin.Rmd> 
 
 -   Kaylie Evans - Using the ggplot2 package, the following vignette was created: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/KaylieEvansCREATE.Rmd>
 
@@ -28,6 +33,8 @@
 -   Will Berritt - I created a Vignette for dplyr and ggplot2 packages: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/berritt_tidyverse_create.Rmd>
 
 -   Puja Roy - I created a Vignette for readr, dplyr and ggplot2 packages: <https://github.com/pujaroy280/SPRING2024TIDYVERSE/blob/main/Puja_Roy_Tidyverse_CREATE_assignment.Rmd>
+
+-   Puja Roy - I extended a Vignette for Atta Boateng's ggplot vignette: <https://github.com/pujaroy280/SPRING2024TIDYVERSE/blob/main/Puja_RoyTidyverseEXTENDAssignment.Rmd>
 
 -   Atta Boateng - I did a vigette for ggplot: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Atta_Boateng_Data_607_Tidyverse.rmd>
 
@@ -55,3 +62,14 @@
 - Amanda Fox: I extended Anna Moy's vignette about dplyr and ggplot with an example using several additional functions from each of these packages
 
 - Anna Moy - I extended Natalie Kalukeerthie's vignette with additional examples of additional items that can be added to the ggplot. 
+
+
+- Natalie Kalukeerthie - I extended Kaylie Evans' vignette with demonstrations using the dplyr package on the included data set.
+
+
+- Atta Boateng - I extende Blessing's vignette to include lm function for correlation between income and city
+
+  
+- Keith DeNivo:  I extended Semyon Toybis stringr vignette to include (str_c,str_flatten,str_length) https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/a30fde3dd054483ff555667027027cf2389349d0/tidyverse_create_semyon_toybiskdd%20mod.Rmd
+- Mohammed Rahman: I extended Adrianina David vignette with demonstrations using the dplyr and sentiment analysis package on the included data set. https://github.com/pkowalchuk/SPRING2024TIDYVERSE/edit/main/Tiddyverse_assignment_David.Rmd
+
