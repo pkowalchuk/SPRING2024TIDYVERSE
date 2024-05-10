@@ -148,6 +148,68 @@ ggplot(congress, aes(x = congress, y = age_years)) +
   geom_boxplot(aes(group = congress))
 ```
 
+### View unique chamber values
+```{r}
+# Extract unique chambers
+unique(congress$chamber)
+```
+
+### Subset congress dataframe to have only chamber and age
+```{r}
+# Create dataframe with 'chamber' and 'age_years' columns
+df_congress <- congress[, c('chamber', 'age_years')]
+```
+
+### Programmatically create summary statistics for the House chamber
+```{r}
+# Calculate summary statistics for the House
+df_house <- subset(df_congress, df_congress$chamber=='House') %>% 
+  summarise(across(where(is.numeric), .fns = list(min = min, median = median, mean = mean, stdev = sd, q25 = ~quantile(., 0.25), q75 = ~quantile(., 0.75), max = max))) 
+```
+
+### Programmatically create summary statistics for the Senate chamber
+```{r}
+# Calculate summary statistics for the Senate
+df_senate <- subset(df_congress, df_congress$chamber=='Senate') %>% 
+  summarise(across(where(is.numeric), .fns = list(min = min, median = median, mean = mean, stdev = sd, q25 = ~quantile(., 0.25), q75 = ~quantile(., 0.75), max = max))) 
+```
+
+### Union the two dataframes
+```{r}
+# Combine statistics for House and Senate
+combined_chambers <- rbind(df_senate, df_house)
+```
+
+### Create new chamber column in dataframe
+```{r}
+# Rename chamber column
+combined_chambers$chamber <- data.frame(chamber=c('Senate', 'House'))
+```
+
+### Pivot the table for visualization
+```{r}
+# Reshape data
+pivoted_combined_chambers <- pivot_longer(combined_chambers, cols =c("age_years_min", "age_years_median", "age_years_mean", "age_years_stdev", "age_years_q25", "age_years_q75", "age_years_max"))
+```
+
+### Create grouped bar chart to compare summary statistics between each Chamber
+```{r}
+# Plot
+ggplot(pivoted_combined_chambers, aes(fill=chamber$chamber, y=value, x=name)) + 
+  geom_bar(position='dodge', stat='identity') + labs(title = "Age Summary Stats House vs. Senate",
+                                                     fill = "Chamber",
+                                                     x = "Statistic",
+                                                     y = "Age") +
+  theme(axis.text.x = element_text(angle=-25, vjust=1, hjust=.5))
+```
+
+### Who was serving at nearly 100 years old?!?
+```{r}
+# Oldest server from either chamber
+congress[which.max(congress$age_years),]$bioname
+```
+
+=======
 ### One Continuous Variable and One Discrete Variable with Color Aesthetic
 ```{r geom-boxplot-color}
 #boxplots for each congress showing age IQR colored by chamber
@@ -280,9 +342,4 @@ ggplot(gapminder,
   ease_aes('linear')
 
 ```
-
-
-
-
-
 
