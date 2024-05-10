@@ -54,6 +54,10 @@ https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidy
 
 -   Fares Alahdab - I created a vignette that shows the use of mutate, group_by, summarise, ggplot2, and cor() in a heart failure dataset: <https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/607_Tidyverse_GitHubColab_Fares_Alahdab.qmd>
 
+
+- Ursula Podosenin- I extended Puja Roy's Tidyverse CREATE assignment by adding two additional columns, one for the overall average price, and one that labels a drink as "cheaper" or "more expensive" when compared against the average price. I also plotted the frequency of the overall average of coffee prices and found the min and max values in the aata set.
+- Mohammed Rahman - I created a Vignette for Dplyr and Tidyverse packages: <https://github.com/mrahman234/SPRING2024TIDYVERSE/blob/main/tidyverse_create_mohammed.Rmd> <br />
+
 -   Fares Alahdab (part-2): using the interesting dataset on NY shooting incidents and associated RMD file (<https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/TidyverseCreateAssignment.Rmd>), I made the following edits: (1)- I added the variable "STATISTICAL_MURDER_FLAG" to the variables kept from the main dataset when filtering as that seems important. (2)- The second bar plot for the victim age groups was missing the vic_age_distribution so I added it to code chunk 7. (3)- Using dplyr and ggplot2, I added a heat map showing the frequency of incidents by both the perpetrators' and victims' age groups. (4)- Focusing on th sexes, I added a bar chart plotting the proportions of murders stratified by the perpetrators' and victims' sexes.
 
 -   Ursula Podosenin- I extended Puja Roy's Tidyverse CREATE assignment by adding two additional columns, one for the overall average price, and one that labels a drink as "cheaper" or "more expensive" when compared against the average price. I also plotted the frequency of the overall average of coffee prices and found the min and max values in the aata set.
@@ -72,4 +76,5 @@ https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/main/Blessing_Anoroh_tidy
   
 - Keith DeNivo:  I extended Semyon Toybis stringr vignette to include (str_c,str_flatten,str_length) https://github.com/pkowalchuk/SPRING2024TIDYVERSE/blob/a30fde3dd054483ff555667027027cf2389349d0/tidyverse_create_semyon_toybiskdd%20mod.Rmd
 - Mohammed Rahman: I extended Adrianina David vignette with demonstrations using the dplyr and sentiment analysis package on the included data set. https://github.com/pkowalchuk/SPRING2024TIDYVERSE/edit/main/Tiddyverse_assignment_David.Rmd
+
 
