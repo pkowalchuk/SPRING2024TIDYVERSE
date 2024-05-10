@@ -1,0 +1,129 @@
+---
+title: "Tidyverse EXTEND Assignment"
+author: "Puja Roy"
+date: "4/28/24"
+output: openintro::lab_report
+---
+
+### Objective
+
+The goal of this assignment is to EXTEND a Vignette of a classmate's CREATE Vignette from the Tidyverse Assignment GitHub Repository.
+
+
+### EXTEND Vignette
+
+For this assignment, I am going to EXTEND Atta Boateng's Vignette. By extending the Vignette below, I will utilize ggplot to plot and customize the color of the plot based on the opening prices of other stock index types from the data.
+
+Below is Atta Boateng's Vignette:
+
+"Using the data of stock data, I am going to demonstrate some of the capabilities of the tidyverse package. I start by first using the ggplot library to plot the opening prices of the New York Stock Exchange, noted by the symbol (NYA)." - Atta Boateng
+
+```{r echo=TRUE, results='asis'}
+library(tidyverse)
+library(openintro)
+
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",");
+dd <- dd %>% filter(Index == "NYA" );
+
+ggplot(data = dd, aes(x=as.Date(dd$Date) , y=as.numeric(dd$Open))) + geom_line()+ labs(x="Date", y="Opening Price")
+
+```
+
+"The ggplot function provides us with various graph options for our dataset. The function has a 'data' parameter and 'mapping' parameter. Additionally, witht the '+' operators, one the include the type of graph they wish to plot." - Atta Boateng
+
+### EXTEND alternate Index Types of Stocks
+
+I extended Anna's Vignette by plotting additional index type stocks and added colors to the plot to enhance data visualization.
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "HSI")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="red") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "GSPTSE")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="blue") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "NSEI")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="green") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "GDAXI")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="purple") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "KS11")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="orange") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "SSMI")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="darkgreen") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "TWII")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="lightpink") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "N225")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="lightblue") + 
+  labs(x="Date", y="Opening Price")
+
+```
+
+
+```{r echo=TRUE, results='asis'}
+dd <- read.csv("https://raw.githubusercontent.com/attaboatengsr/DATA607/main/Week9/indexData.csv", sep=",")
+dd <- dd %>% filter(Index == "N100")
+
+ggplot(data = dd, aes(x=as.Date(dd$Date), y=as.numeric(dd$Open))) + 
+  geom_line(color="hotpink") + 
+  labs(x="Date", y="Opening Price")
+
+```
