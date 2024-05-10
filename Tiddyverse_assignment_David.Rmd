@@ -11,9 +11,14 @@ library(httr)
 library(jsonlite)
 ```
 
-```{r tiddyverse package}
-library(dplyr)
-library(ggplot2)
+```{r tiddyverse package, message = FALSE, warning=FALSE}
+library("tidyverse")
+library("tidytext")
+library("janeaustenr")
+library("tidyr")
+library("dplyr")
+library("stringr")
+library("ggplot2")
 ```
 
 ## Web API
@@ -61,4 +66,62 @@ s_df %>%
   geom_line()
 ```
 
+## Extended
 
+## Bar chart of articles per item type
+
+```{r bar-chart}
+s_df %>% 
+  count(item_type) %>% 
+  ggplot(aes(x = item_type, y = n)) + 
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Number of Articles by Item Type", x = "Item Type", y = "Count") +
+  theme_minimal()
+```
+
+## Group by Section: Get the number of articles per section
+
+```{r}
+articles_by_section <- s_df %>% 
+  group_by(section) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count))
+articles_by_section
+```
+
+## Summarize: Count the number of articles, average title length, etc.
+```{r}
+summary_stats <- s_df %>% 
+  summarize(
+    total_articles = n(),
+    avg_title_length = mean(nchar(title)),
+    avg_abstract_length = mean(nchar(abstract))
+  )
+
+summary_stats
+```
+
+## Filter by Date Range: Focus on articles published in the last month
+```{r}
+last_month <- Sys.Date() - 30
+recent_articles <- s_df %>% 
+  mutate(published_date = as.Date(published_date)) %>% 
+  filter(published_date >= last_month)
+
+head(recent_articles)
+```
+
+# Basic Sentiment Analysis: Analyze sentiment of titles
+```{r}
+bing <- get_sentiments("bing")
+title_sentiment <- s_df %>% 
+  unnest_tokens(word, title) %>% 
+  inner_join(bing, by = "word") %>% 
+  count(sentiment) %>% 
+  ggplot(aes(x = sentiment, y = n, fill = sentiment)) + 
+  geom_col() + 
+  labs(title = "Sentiment Analysis of Article Titles", x = "Sentiment", y = "Count") +
+  theme_minimal()
+
+title_sentiment
+```

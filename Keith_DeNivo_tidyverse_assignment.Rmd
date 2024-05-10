@@ -70,7 +70,7 @@ fct_relevel(): Changing the order of a factor by hand. fct_lump():
 Collapsing the least/most frequent values of a factor into “other”. " -
 <https://forcats.tidyverse.org/>
 
-We will take a look at fct_reorder() and fct_infreq().
+We will take a look at `fct_reorder()` and `fct_infreq()`.
 
 ```{r read in data}
 
@@ -84,9 +84,9 @@ names(car_df)
 
 ```
 
-## Data 
+## Data
 
-Data set uploaded to the tidyverse git. Data is read into a dataframe.
+Data set uploaded to the tidyverse git. Data is read into a data frame.
 The data contains car names, the number of owners the car has had,
 years, etc.
 
@@ -124,7 +124,7 @@ car_df <- car_df %>%
 knitr::kable(car_df[1:20, 1:8], format = "html")
 ```
 
-## Reorder 
+## Reorder
 
 Reordering data frames by factors with user defined levels can be
 useful, but what about graphs?
@@ -166,9 +166,11 @@ mutate(owner = fct_infreq(owner)) %>%
 ## Adding/Dropping
 
 Additionally, we can drop factors with the `fct_drop()` function, which
-drops unused levels. Below, we drop the test drive data and the
-corresponding level from the factor categorizing the number of owners of
-a car.
+drops unused levels. First, we drop the test drive observations from the
+data, and verify that even though this level is no longer used, the
+factor variable categorizing the number of owners of a car still shows
+"Test Drive Car" as a valid potential level of the factor. By using
+`fct_drop()` below, we drop this unused level from the factor.
 
 ```{r dropping factors}
 
@@ -186,11 +188,12 @@ o2 <- fct_drop(o2)
 levels(o2)
 ```
 
-The `o2` factor was created with 4 levels as displayed above.
+Thus, the `o2` factor was created with only 4 levels as displayed above,
+without the level for "Test Drive Car."
 
 We can also add a level to a factor with the function `fct_expand`. I
 created the level "Non-owner" to add to the factor `o2` created in the
-previous segment:
+previous chunk:
 
 ```{r adding factors}
 o3 <- fct_expand(o2, "Non-owner")
@@ -199,10 +202,10 @@ levels(o3)
 
 ## Conclusion
 
-fct_infreq can be used to sort by the frequency of the factor. The
-numerical values for the y values of factors can be reordered using
-fct_reorder fct_reorder() and fact_infreq were used to reorder data
-frames and graphs.
+The function `fct_infreq()` can be used to sort by the frequency of the
+factor. The numerical values for the y values of factors can be
+reordered using `fct_reorder()`. `fct_reorder()` and `fact_infreq()`
+were used to reorder data frames and graphs.
 
 To extend this assignment, we also explored how to add and drop levels
-to/from factors.
+to/from factors with `fct_drop()` and `fct_expand().`
